@@ -29,7 +29,7 @@
         return false;
     });
 
-
+    
     // Modal Video
     $(document).ready(function () {
         var $videoSrc;
@@ -106,6 +106,8 @@
             }
         }
     });
+
+
 
 })(jQuery);
 
