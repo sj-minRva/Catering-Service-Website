@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Contact</title>
+        <title>CaterServ - Catering Services Website Template</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -58,7 +58,7 @@
                             <a href="contact.html" class="nav-item nav-link active">Contact</a>
                         </div>
                         <button class="btn-search btn btn-primary btn-md-square me-4 rounded-circle d-none d-lg-inline-flex" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button>
-                        <a href="book.html" class="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill">Book Now</a>
+                        <a href="login.html" class="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill">Login</a>
                     </div>
                 </nav>
             </div>
@@ -97,122 +97,146 @@
 
 
         <!-- Contact Start -->
-        <div class="container-fluid contact py-6 wow bounceInUp" data-wow-delay="0.1s">
-            <div class="container">
-                <div class="p-5 bg-light rounded contact-form">
-                    <div class="row g-4">
-                        <div class="col-12">
-                            <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3">Get in touch</small>
-                            <h1 class="display-5 mb-0">Contact Us For Any Queries!</h1>
+<div class="container-fluid contact py-6 wow bounceInUp" data-wow-delay="0.05s">
+    <div class="container">
+        <div class="p-5 bg-light rounded contact-form">
+            <div class="row g-4">
+                <div class="col-12">
+                    <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3">
+                        Get in touch
+                    </small>
+                    <h1 class="display-5 mb-0">Contact Us For Any Queries!</h1>
+                </div>
+                <div class="col-md-6 col-lg-7">
+                    <!-- Single Form Without Nesting -->
+                    <form id="enquiryForm" onsubmit="handleSubmit(event)">
+                        <input type="text" class="w-100 form-control p-3 mb-4 border-primary bg-light" placeholder="Your Name" required>
+                        <input type="email" class="w-100 form-control p-3 mb-4 border-primary bg-light" placeholder="Enter Your Email" required>
+                        <textarea class="w-100 form-control mb-4 p-3 border-primary bg-light" rows="4" placeholder="Your Message" required></textarea>
+                        
+                        <button class="w-100 btn btn-primary form-control p-3 border-primary bg-primary rounded-pill" type="submit">
+                            Submit Now
+                        </button>
+                    </form>
+                    <br>
+                    <br>
+                    <!-- Success Message -->
+                    <p id="responseMessage" style="display: none; color: rgb(3, 7, 18); font-family: inherit;"></p>
+                </div>
+
+                <div class="col-md-6 col-lg-5">
+                    <div>
+                        <div class="d-inline-flex w-100 border border-primary p-4 rounded mb-4">
+                            <i class="fas fa-map-marker-alt fa-2x text-primary me-4"></i>
+                            <div class="">
+                                <h4>Address</h4>
+                                <p>South Pampady, Near St. Thomas High School, KUTTICKAL, Pampady, Kottayam - 686521</p>
+                            </div>
                         </div>
-                        <div class="col-md-6 col-lg-7">
-                            <p class="mb-4">The contact form is currently inactive. Get a functional and working contact form with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're done. <a href="https://htmlcodex.com/contact-form">Download Now</a>.</p>
-                            <form>
-                                <input type="text" class="w-100 form-control p-3 mb-4 border-primary bg-light" placeholder="Your Name">
-                                <input type="email" class="w-100 form-control p-3 mb-4 border-primary bg-light" placeholder="Enter Your Email">
-                                <textarea class="w-100 form-control mb-4 p-3 border-primary bg-light" rows="4" cols="10" placeholder="Your Message"></textarea>
-                                <button class="w-100 btn btn-primary form-control p-3 border-primary bg-primary rounded-pill" type="submit">Submit Now</button>
-                            </form>
+                        <div class="d-inline-flex w-100 border border-primary p-4 rounded mb-4">
+                            <i class="fas fa-envelope fa-2x text-primary me-4"></i>
+                            <div class="">
+                                <h4>Mail Us</h4>
+                                <p class="mb-2">charlyrincy@gmail.com</p>
+                            </div>
                         </div>
-                        <div class="col-md-6 col-lg-5">
-                            <div>
-                                <div class="d-inline-flex w-100 border border-primary p-4 rounded mb-4">
-                                    <i class="fas fa-map-marker-alt fa-2x text-primary me-4"></i>
-                                    <div class="">
-                                        <h4>Address</h4>
-                                        <p>123 Street, New York, USA</p>
-                                    </div>
-                                </div>
-                                <div class="d-inline-flex w-100 border border-primary p-4 rounded mb-4">
-                                    <i class="fas fa-envelope fa-2x text-primary me-4"></i>
-                                    <div class="">
-                                        <h4>Mail Us</h4>
-                                        <p class="mb-2">info@example.com</p>
-                                        <p class="mb-0">support@example.com</p>
-                                    </div>
-                                </div>
-                                <div class="d-inline-flex w-100 border border-primary p-4 rounded">
-                                    <i class="fa fa-phone-alt fa-2x text-primary me-4"></i>
-                                    <div class="">
-                                        <h4>Telephone</h4>
-                                        <p class="mb-2">(+012) 3456 7890 123</p>
-                                        <p class="mb-0">(+704) 5555 0127 296</p>
-                                    </div>
-                                </div>
+                        <div class="d-inline-flex w-100 border border-primary p-4 rounded">
+                            <i class="fa fa-phone-alt fa-2x text-primary me-4"></i>
+                            <div class="">
+                                <h4>Telephone</h4>
+                                <p class="mb-2">9947339988</p>
+                                <p class="mb-0">9744139988</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Contact End -->
-        - Footer Start -->
-        <div class="container-fluid footer py-6 my-6 mb-0 bg-light wow bounceInUp" data-wow-delay="0.1s">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footer-item">
-                            <h1 class="text-primary">BS <span class="text-dark">Foods</span></h1>
-                            <p class="lh-lg mb-4">Sincere service since 1980, with an unwavering commitment to quality..</p>
-                            <div class="footer-icon d-flex">
-                                <a class="btn btn-primary btn-sm-square me-2 rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a href="#" class="btn btn-primary btn-sm-square me-2 rounded-circle"><i class="fab fa-instagram"></i></a>
-                                <a href="#" class="btn btn-primary btn-sm-square rounded-circle"><i class="fab fa-linkedin-in"></i></a>
-                            </div>
+    </div>
+</div>
+<!-- Contact End -->
+
+<!-- JavaScript for Form Handling -->
+<script>
+    function handleSubmit(event) {
+        event.preventDefault(); // Prevent page reload
+
+        document.getElementById("responseMessage").innerText = "Your Query will be addressed soon. Thank you";
+        document.getElementById("responseMessage").style.display = "block";
+
+        // Clear form fields
+        document.getElementById("enquiryForm").reset();
+    }
+</script>
+
+     <!-- Footer Start -->
+     <div class="container-fluid footer py-6 my-6 mb-0 bg-light wow bounceInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-item">
+                        <h1 class="text-primary">BS <span class="text-dark">Foods</span></h1>
+                        <p class="lh-lg mb-4">Sincere service since 1980, with an unwavering commitment to quality..</p>
+                        <!--<div class="footer-icon d-flex">
+                            <a class="btn btn-primary btn-sm-square me-2 rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="btn btn-primary btn-sm-square me-2 rounded-circle"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="btn btn-primary btn-sm-square rounded-circle"><i class="fab fa-linkedin-in"></i></a>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-item">
+                        <h4 class="mb-4">Special Items</h4>
+                        <div class="d-flex flex-column align-items-start">
+                            <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Mutton Biriyani</a>
+                            <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Meat Cutlet</a>
+                            <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Panner Masala</a>
+                            <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Special Sweets</a>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footer-item">
-                            <h4 class="mb-4">Special Items</h4>
-                            <div class="d-flex flex-column align-items-start">
-                                <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Mutton Biriyani</a>
-                                <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i></a>
-                                <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Panner Burger</a>
-                                <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Special Sweets</a>
-                            </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-item">
+                        <h4 class="mb-4">Contact Us</h4>
+                        <div class="d-flex flex-column align-items-start">
+                            <p><i class="fa fa-map-marker-alt text-primary me-2"></i> South Pampady, Near St. Thomas High School,KUTTICKAL, Pampady, Kottayam - 686521</p>
+                            <p><i class="fa fa-phone-alt text-primary me-2"></i> 9947339988</p>
+                            <p><i class="fa fa-phone-alt text-primary me-2"></i> 9744139988</p>
+                            <p><i class="fas fa-envelope text-primary me-2"></i> charlyrincy@gmail.com</p>
+                            <!--<p><i class="fa fa-clock text-primary me-2"></i> 26/7 Hours Service</p>-->
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footer-item">
-                            <h4 class="mb-4">Contact Us</h4>
-                            <div class="d-flex flex-column align-items-start">
-                                <p><i class="fa fa-map-marker-alt text-primary me-2"></i> South Pampady, Near St. Thomas High School,KUTTICKAL, Pampady, Kottayam - 686521</p>
-                                <p><i class="fa fa-phone-alt text-primary me-2"></i> 9947339988</p>
-                                <p><i class="fa fa-phone-alt text-primary me-2"></i> 9744139988</p>
-                                <p><i class="fas fa-envelope text-primary me-2"></i> charlyrincy@gmail.com</p>
-                                <!--<p><i class="fa fa-clock text-primary me-2"></i> 26/7 Hours Service</p>-->
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-item">
+                        <h4 class="mb-4">Social Gallery</h4>
+                        <div class="row g-2">
+                            <div class="col-4">
+                                 <img src="img/menu-01.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footer-item">
-                            <h4 class="mb-4">Social Gallery</h4>
-                            <div class="row g-2">
-                                <div class="col-4">
-                                     <img src="img/menu-01.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
-                                </div>
-                                <div class="col-4">
-                                     <img src="img/menu-02.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
-                                </div>
-                                <div class="col-4">
-                                     <img src="img/menu-03.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
-                                </div>
-                                <div class="col-4">
-                                     <img src="img/menu-04.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
-                                </div>
-                                <div class="col-4">
-                                     <img src="img/menu-05.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
-                                </div>
-                                <div class="col-4">
-                                     <img src="img/menu-06.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
-                                </div>
+                            <div class="col-4">
+                                 <img src="img/menu-02.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
+                            </div>
+                            <div class="col-4">
+                                 <img src="img/menu-03.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
+                            </div>
+                            <div class="col-4">
+                                 <img src="img/menu-04.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
+                            </div>
+                            <div class="col-4">
+                                 <img src="img/menu-05.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
+                            </div>
+                            <div class="col-4">
+                                 <img src="img/menu-06.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Footer End -->
+    </div>
+    <!-- Footer End -->
+
 
     <!-- Copyright Start -->
     <div class="container-fluid copyright bg-dark py-4">
