@@ -24,12 +24,3 @@ def insert_customer(name, email, phone):
     
     except Error as e:
         print("Error while connecting to MySQL", e)
-
-    
-
-    
-
-    
-
-    
-

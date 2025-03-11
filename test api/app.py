@@ -12,8 +12,6 @@ def create_customer():
 
     insert_customer(customer_data['name'], customer_data['email'], customer_data['phone'])
 
-    # Here you can add code to process/store the data
-
     return jsonify({'message': 'Customer data received successfully', 'data': customer_data}), 201
 
 if __name__ == '__main__':
