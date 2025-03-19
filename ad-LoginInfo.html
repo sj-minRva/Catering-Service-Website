@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Booking</title>
+        <title>Customer Data</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -37,6 +37,7 @@
         </div>
         <!-- Spinner End -->
 
+
         <!-- Navbar start -->
         <div class="container-fluid nav-bar">
             <div class="container">
@@ -50,14 +51,14 @@
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
                             <a href="index.html" class="nav-item nav-link">Home</a>
-                            <a href="about.html" class="nav-item nav-link">About</a>
-                            <a href="service.html" class="nav-item nav-link">Services</a>
                             <a href="event.html" class="nav-item nav-link">Events</a>
-                            <a href="menu.html" class="nav-item nav-link">Menu</a>                            
-                            <a href="contact.html" class="nav-item nav-link">Contact</a>
+                            <a href="service.html" class="nav-item nav-link">Services</a>                            
+                            <a href="menu.html" class="nav-item nav-link">Menu</a>     
+                            <a href="book.html" class="nav-item nav-link">Booking</a>                        
+                            <a href="contact.html" class="nav-item nav-link active">Contact</a>                        
                         </div>
                         <button class="btn-search btn btn-primary btn-md-square me-4 rounded-circle d-none d-lg-inline-flex" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button>
-                        <a href="login.html" class="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill">Logout</a>
+                        <a href="login.html" class="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill">Login</a>
                     </div>
                 </nav>
             </div>
@@ -88,114 +89,90 @@
         <!-- Hero Start -->
         <div class="container-fluid bg-light py-6 my-6 mt-0">
             <div class="container text-center animated bounceInDown">
-                <h1 class="display-1 mb-4">Booking</h1>
+                <h1 class="display-1 mb-4">Customer Data</h1>
+           
             </div>
         </div>
         <!-- Hero End -->
 
 
-        <!-- Book Us Start -->
-        <div class="container-fluid contact py-6 wow bounceInUp" data-wow-delay="0.1s">
+        <!-- Contact Start -->
+        <div class="container-fluid contact py-6 wow bounceInUp" data-wow-delay="0.05s">
             <div class="container">
-                <div class="row g-0">
-                    <div class="col-1">
-                        <img src="img/background-site.jpg" class="img-fluid h-100 w-100 rounded-start" style="object-fit: cover; opacity: 0.7;" alt="">
-                    </div>
-                    <div class="col-10">
-                        <div class="border-bottom border-top border-primary bg-light py-5 px-4">
-                            <div class="text-center">
-                                <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3">Book Us</small>
-                                <h1 class="display-5 mb-5">Where you want Our Services</h1>
-                            </div>
-                            <form id="bookingForm">
-                                <div class="row g-4 form">
-
-                                    <div class="col-lg-4 col-md-6">
-                                        <input type="text" id="city" class="form-control border-primary p-2" placeholder="Enter city">
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <input type="text" id="palace" class="form-control border-primary p-2" placeholder="Enter Event Place">
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <select id="eventType" class="form-select border-primary p-2" aria-label="Default select example">
-                                            <option selected>Small Event</option>
-                                            <option value="1">Event Type</option>
-                                            <option value="2">Big Event</option>
-                                            <option value="3">Small Event</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <select id="guests" class="form-select border-primary p-2" aria-label="Default select example">
-                                            <option selected>No. Of Guests</option>
-                                            <option value="1">100-200</option>
-                                            <option value="2">300-400</option>
-                                            <option value="3">500-600</option>
-                                            <option value="4">700-800</option>
-                                            <option value="5">900-1000</option>
-                                            <option value="6">1000+</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <select id="foodType" class="form-select border-primary p-2" aria-label="Default select example">
-                                            <option selected>Vegetarian</option>
-                                            <option value="1">Vegetarian</option>
-                                            <option value="2">Non Vegetarian</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <input type="mobile" id="contact" class="form-control border-primary p-2" placeholder="Your Contact No.">
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <input type="date" id="date" class="form-control border-primary p-2" placeholder="Select Date">
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <input type="email"  id="email" class="form-control border-primary p-2" placeholder="Enter Your Email">
-                                    </div>
-                                    <div class="col-lg-4 col-md-6">
-                                        <input type="text"  id="Dietary Restrictions" class="form-control border-primary p-2" placeholder="Enter Your Dietary Restrictions">
-                                    </div>  
-                                    <div class="col-12 text-center">
-                                        <button type="button" class="btn btn-primary mt-3" onclick="location.href='menu.html';">
-                                            Submit
-                                        </button>
-                                    </div>                            
-                                </div>
-                            </form>
-                            <script src="script.js"></script>
+                <div class="p-5 bg-light rounded contact-form">
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <h1 class="display-5 mb-0">Customer List</h1>
                         </div>
-                    </div>
-                    <div class="col-1">
-                        <img src="img/background-site.jpg" class="img-fluid h-100 w-100 rounded-end" style="object-fit: cover; opacity: 0.7;" alt="">
+                        <div class="col-md-6 col-lg-7">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="customerTableBody">
+                                    <!-- Data will be injected here -->
+                                </tbody>
+                            </table>                          
+                        </div>                              
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Book Us End -->
+        <!-- Contact End -->
 
+        <!-- JavaScript for displaying User information -->
+        <script>
+            // Fetch data from Flask API
+        function loadCustomers() {
+            fetch('http://127.0.0.1:5000/api/customers')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById("customerTableBody");
+                    tableBody.innerHTML = ""; // Clear existing data
 
-       <!-- Footer Start -->
-        <div class="container-fluid footer py-6 my-6 mb-0 bg-light wow bounceInUp" data-wow-delay="0.1s">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footer-item">
-                            <h1 class="text-primary">BS <span class="text-dark">Foods</span></h1>
-                            <p class="lh-lg mb-4">Sincere service since 1980, with an unwavering commitment to quality..</p>
-                            <div class="footer-icon d-flex">
-                                <a class="btn btn-primary btn-sm-square me-2 rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a href="#" class="btn btn-primary btn-sm-square me-2 rounded-circle"><i class="fab fa-instagram"></i></a>
-                                <a href="#" class="btn btn-primary btn-sm-square rounded-circle"><i class="fab fa-linkedin-in"></i></a>
-                          </div>
-                        </div>
+                    data.forEach((customer, index) => {
+                        const row = `
+                            <tr>
+                                <td>${customer.id}</td>
+                                <td>${customer.name}</td>
+                                <td>${customer.email}</td>
+                            </tr>
+                        `;
+                        tableBody.innerHTML += row;
+                    });
+                })
+                .catch(error => console.error("Error loading customers:", error));
+        }
+        // Load customers when the page loads
+        window.onload = loadCustomers;
+        </script>
+
+     <!-- Footer Start -->
+     <div class="container-fluid footer py-6 my-6 mb-0 bg-light wow bounceInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-item">
+                        <h1 class="text-primary">BS <span class="text-dark">Foods</span></h1>
+                        <p class="lh-lg mb-4">Sincere service since 1980, with an unwavering commitment to quality..</p>
+                        <!--<div class="footer-icon d-flex">
+                            <a class="btn btn-primary btn-sm-square me-2 rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="btn btn-primary btn-sm-square me-2 rounded-circle"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="btn btn-primary btn-sm-square rounded-circle"><i class="fab fa-linkedin-in"></i></a>
+                        </div>-->
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-item">
                         <h4 class="mb-4">Special Items</h4>
                         <div class="d-flex flex-column align-items-start">
-                            <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Cheese Burger</a>
-                            <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Sandwich</a>
-                            <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Panner Burger</a>
+                            <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Mutton Biriyani</a>
+                            <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Meat Cutlet</a>
+                            <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Panner Masala</a>
                             <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Special Sweets</a>
                         </div>
                     </div>
@@ -204,10 +181,11 @@
                     <div class="footer-item">
                         <h4 class="mb-4">Contact Us</h4>
                         <div class="d-flex flex-column align-items-start">
-                            <p><i class="fa fa-map-marker-alt text-primary me-2"></i> </p>
-                            <p><i class="fa fa-phone-alt text-primary me-2"></i> (+012) 3456 7890 123</p>
-                            <p><i class="fas fa-envelope text-primary me-2"></i> info@example.com</p>
-                            <p><i class="fa fa-clock text-primary me-2"></i> 26/7 Hours Service</p>
+                            <p><i class="fa fa-map-marker-alt text-primary me-2"></i> South Pampady, Near St. Thomas High School,KUTTICKAL, Pampady, Kottayam - 686521</p>
+                            <p><i class="fa fa-phone-alt text-primary me-2"></i> 9947339988</p>
+                            <p><i class="fa fa-phone-alt text-primary me-2"></i> 9744139988</p>
+                            <p><i class="fas fa-envelope text-primary me-2"></i> charlyrincy@gmail.com</p>
+                            <!--<p><i class="fa fa-clock text-primary me-2"></i> 26/7 Hours Service</p>-->
                         </div>
                     </div>
                 </div>
@@ -256,6 +234,7 @@
         </div>
     </div>
     <!-- Copyright End -->
+
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-md-square btn-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   

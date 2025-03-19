@@ -10,7 +10,7 @@ def create_customer():
     customer_data = request.json
     print('Received customer data:', customer_data)
 
-    insert_customer(customer_data['name'], customer_data['email'], customer_data['phone'])
+    insert_customer(customer_data['name'], customer_data['email'], customer_data['password'])
 
     return jsonify({'message': 'Customer data received successfully', 'data': customer_data}), 201
 

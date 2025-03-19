@@ -1,19 +1,19 @@
 import mysql.connector
 from mysql.connector import Error
 
-def insert_customer(name, email, phone):
+def insert_customer(name, email, password):
     try:
         connection = mysql.connector.connect(
             host='localhost',
-            database='jamesson',
+            database='Catering',
             user='root',
             password='root'
         )
 
         if connection.is_connected():
             cursor = connection.cursor()
-            insert_query = """INSERT INTO customers (name, email, phone) VALUES (%s, %s, %s)"""
-            record = (name, email, phone)
+            insert_query = """INSERT INTO customers (name, email, password) VALUES (%s, %s, %s)"""
+            record = (name, email, password)
             cursor.execute(insert_query, record)
             connection.commit()
             print("Customer data inserted successfully")

@@ -1,0 +1,11 @@
+change phone to password
+
+reduce delay time
+
+
+make booking page
+
+merge events testamnonals and services
+
+
+make adimn login.
