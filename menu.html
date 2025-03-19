@@ -38,7 +38,7 @@
         <!-- Spinner End -->
 
 
-        <!-- Navbar start -->
+        <!-- Navbar start --> 
         <div class="container-fluid nav-bar">
             <div class="container">
                 <nav class="navbar navbar-light navbar-expand-lg py-4">
@@ -63,10 +63,10 @@
                 </nav>
             </div>
         </div>
-        <!-- Navbar End -->
+         <!-- Navbar End -->
 
 
-        <!-- Modal Search Start -->
+        <!-- Modal Search Start 
         <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-fullscreen">
                 <div class="modal-content rounded-0">
@@ -83,7 +83,7 @@
                 </div>
             </div>
         </div>
-        <!-- Modal Search End -->
+        Modal Search End -->
 
 
         <!-- Hero Start -->
@@ -99,10 +99,10 @@
 <!-- Menu Start -->
 <div class="container-fluid menu py-6">
     <div class="container">
-        <div class="text-center wow bounceInUp" data-wow-delay="0.1s">
+        <!--<div class="text-center wow bounceInUp" data-wow-delay="0.1s">
             <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3">Our Menu</small>
             <h1 class="display-5 mb-5">Most Popular Food in the World</h1>
-        </div>
+        </div>-->
         <div class="tab-class text-center">
             <ul class="nav nav-pills d-inline-flex justify-content-center mb-5 wow bounceInUp" data-wow-delay="0.1s">
                 <li class="nav-item p-2">
@@ -752,12 +752,70 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
-        </div>
+            <br>
+            <!-- Add to Order Button -->
+    <button type="button" class="btn btn-primary mt-3" onclick="addToOrder()">Add to Order</button>
+
+    <!-- Booking Summary -->
+    <div id="bookingSummary">
+        <h3>Booking Summary</h3>
+        <p id="summaryText"></p>
+        <button onclick="confirmOrder()">Confirm</button>
     </div>
-</div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    // Initially set "No item selected!" message
+    document.getElementById("summaryText").innerText = "No item selected!";
+
+    document.querySelector(".btn-primary").addEventListener("click", function () {
+        let items = document.querySelectorAll(".menu-item");
+        let summaryText = "";
+        
+        items.forEach(item => {
+            let itemName = item.querySelector("h4").innerText;
+            let countInput = item.querySelector("input[type='number']");
+            let count = countInput.value;
+
+            if (count && count > 0) {
+                summaryText += `<p>${count} x ${itemName}</p>`;
+            }
+        });
+
+        let summaryBox = document.getElementById("bookingSummary");
+        if (summaryText) {
+            document.getElementById("summaryText").innerHTML = summaryText;
+            summaryBox.style.display = "block";  // Show the summary
+        } else {
+            document.getElementById("summaryText").innerText = "No item selected!";
+        }
+    });
+});
+
+    </script>
+    <style>
+    #bookingSummary {
+        display: none;
+        margin-top: 40px; /* Increased spacing */
+        padding: 20px;
+        border: 2px solid #333; /* Slightly darker border */
+        border-radius: 8px;
+        background-color: #f9f9f9; /* Light background */
+        width: 50%; /* Adjust width as needed */
+    }
+    
+    #summaryText {
+        font-size: 18px; /* Make text bigger */
+        font-weight: bold; /* Make text darker and bolder */
+        color: #222; /* Dark font color */
+        text-align: left; /* Left align the text */
+    }
+</style>
+
 <!-- Menu End -->
 
 

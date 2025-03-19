@@ -2,8 +2,11 @@ change phone to password
 
 reduce delay time
 
+fix menu page
+    script does not work
 
 make booking page
+    booking api inegration
 
 merge events testamnonals and services
 
