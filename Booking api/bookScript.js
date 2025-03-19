@@ -24,11 +24,26 @@ document.getElementById("bookingForm").addEventListener("submit", function(event
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById('response').innerText = data.message;
+        
+        document.getElementById("saveButton").addEventListener("click", function(event) {
+            event.preventDefault(); // Prevents the default form submission for demonstration.
+            document.getElementById('response').innerText = "Saved successfully!"; // Visual feedback.
+            document.getElementById("submitButton").disabled = false; // Enable Submit button.
+        });
+        
+        document.getElementById("submitButton").addEventListener("click", function() {
+            if (!this.disabled) {
+                window.location.href = "menu.html"; // Redirects to menu.html when enabled.
+            }
+        });
+               
+        
         console.log('Success:', data);
     })
     .catch((error) => {
         document.getElementById('response').innerText = `Error: ${error.message}`;
         console.error('Error:', error);
     });
+
+    
 });
