@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 document.getElementById("response").innerText = "Data submitted successfully!";
                 setTimeout(() => {
-                    window.location.href = "menu.html"; // Redirect to menu.html after success
+                    window.location.href = "custBookingData.html"; // Redirect to menu.html after success
                 }, 1500);
             }
         })

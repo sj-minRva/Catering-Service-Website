@@ -5,10 +5,13 @@ reduce delay time
 fix menu page
     script does not work
 
-make booking page
-    booking api inegration
+contanct us page and queries
 
 merge events testamnonals and services
 
 
 make adimn login.
+    login page redirects to admin login 
+        which shows custBookdata
+            each new entry has confirm & not confirm button
+                confirm ---- email notification
