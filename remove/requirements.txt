@@ -1,5 +1,7 @@
 change phone to password
 
+ask for images
+
 reduce delay time
 
 fix menu page
@@ -8,6 +10,9 @@ fix menu page
 contanct us page and queries
 
 merge events testamnonals and services
+
+change nav bar
+
 
 
 make adimn login.
