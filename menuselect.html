@@ -139,8 +139,13 @@
                                 <img class="flex-shrink-0 img-fluid rounded-circle" src="img/menu-01.jpg" alt="">
                                 <div class="w-100 d-flex flex-column text-start ps-4">
                                     <div class="d-flex justify-content-between border-bottom border-primary pb-2 mb-2">
-                                        <h4>Cutlet</h4>                                    
+                                        <h4>Cutlet</h4>
+                                        
                                     </div>
+                                    <form action="menu.html">
+                                        <label for="itemCount">Count:</label><input type="number" id="itemCount" name="count" min="1" max="100" class="small-input">
+
+                                    </form> 
                                 </div>
                             </div>
                         </div>
@@ -149,9 +154,16 @@
                                 <img class="flex-shrink-0 img-fluid rounded-circle" src="img/menu-02.jpg" alt="">
                                 <div class="w-100 d-flex flex-column text-start ps-4">
                                     <div class="d-flex justify-content-between border-bottom border-primary pb-2 mb-2">
-                                        <h4>Chicken Nuggets</h4>                                        
+                                        <h4>Chicken Nuggets</h4>
+                                        
                                     </div>
-                                </div>                              
+                                    <form action="menu.html">
+                                        <label for="itemCount">Count:</label><input type="number" id="itemCount" name="count" min="1" max="100" class="small-input">
+
+                                    </form>  
+                                </div>
+                                
+                                
                             </div>
                         </div>
                         <div class="col-lg-6 wow bounceInUp" data-wow-delay="0.3s">
@@ -745,8 +757,8 @@
                 </div>
             </div>
             <br>
-            <!-- Add to Order Button -->
-    <button type="button" class="btn btn-primary mt-3" onclick="addToOrder()">Add to Order</button>
+          <!-- Add to Order Button -->
+    <button type="button" id="addToOrderButton" class="btn btn-primary mt-3">Add to Order</button>
 
     <!-- Booking Summary -->
     <div id="bookingSummary">
@@ -754,58 +766,69 @@
         <p id="summaryText"></p>
         <button onclick="confirmOrder()">Confirm</button>
     </div>
+</div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-    // Initially set "No item selected!" message
-    document.getElementById("summaryText").innerText = "No item selected!";
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const addToOrderButton = document.getElementById("addToOrderButton");
+        const bookingSummary = document.getElementById("bookingSummary");
+        const summaryTextElement = document.getElementById("summaryText");
 
-    document.querySelector(".btn-primary").addEventListener("click", function () {
-        let items = document.querySelectorAll(".menu-item");
-        let summaryText = "";
-        
-        items.forEach(item => {
-            let itemName = item.querySelector("h4").innerText;
-            let countInput = item.querySelector("input[type='number']");
-            let count = countInput.value;
+        // Initially set "No item selected!" message and hide the summary box
+        summaryTextElement.innerText = "No item selected!";
+        bookingSummary.style.display = "none";
 
-            if (count && count > 0) {
-                summaryText += `<p>${count} x ${itemName}</p>`;
+        addToOrderButton.addEventListener("click", function () {
+            const items = document.querySelectorAll(".menu-item");
+            let summaryText = "";
+
+            items.forEach(item => {
+                const itemName = item.querySelector("h4").innerText;
+                const countInput = item.querySelector("input[type='number']");
+                const count = countInput.value;
+
+                if (count && count > 0) {
+                    summaryText += `<p>${count} x ${itemName}</p>`;
+                }
+            });
+
+            if (summaryText) {
+                summaryTextElement.innerHTML = summaryText;
+                bookingSummary.style.display = "block";  // Show the summary when items are added
+            } else {
+                summaryTextElement.innerText = "No item selected!";
+                bookingSummary.style.display = "none";  // Hide the summary if nothing is selected
             }
         });
-
-        let summaryBox = document.getElementById("bookingSummary");
-        if (summaryText) {
-            document.getElementById("summaryText").innerHTML = summaryText;
-            summaryBox.style.display = "block";  // Show the summary
-        } else {
-            document.getElementById("summaryText").innerText = "No item selected!";
-        }
     });
-});
 
-    </script>
-    <style>
-    #bookingSummary {
-        display: none;
-        margin-top: 40px; /* Increased spacing */
-        padding: 20px;
-        border: 2px solid #333; /* Slightly darker border */
-        border-radius: 8px;
-        background-color: #f9f9f9; /* Light background */
-        width: 50%; /* Adjust width as needed */
-    }
-    
-    #summaryText {
-        font-size: 18px; /* Make text bigger */
-        font-weight: bold; /* Make text darker and bolder */
-        color: #222; /* Dark font color */
-        text-align: left; /* Left align the text */
-    }
+    function confirmOrder() {
+        alert("Order confirmed!");
+   }
+</script>
+
+<style>
+   #bookingSummary {
+    display: none;                /* Initially hidden */
+    margin: 20px auto;            /* Center the box horizontally */
+    padding: 20px;                
+    border: 2px solid #333;       /* Slightly darker border */
+    border-radius: 8px;
+    background-color: #f9f9f9;    /* Light background */
+    width: 80%;                   /* Make it take up 80% of the parent width */
+    max-width: 800px;             /* Limit maximum width */
+    text-align: center;           /* Center-align text inside */
+}
+
+#summaryText {
+    font-size: 18px;              /* Make text bigger */
+    font-weight: bold;            /* Make text darker and bolder */
+    color: #222;                  /* Dark font color */
+    text-align: left;             /* Left-align the items in the summary */
+}
+
 </style>
-
-<!-- Menu End -->
-
+<!--Menu end-->
 
         <!-- Footer Start -->
         <div class="container-fluid footer py-6 my-6 mb-0 bg-light wow bounceInUp" data-wow-delay="0.1s">

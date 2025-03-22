@@ -3,7 +3,7 @@ change phone to password
 reduce delay time
 
 fix menu page
-    script does not work
+    remove count and add to order
 
 contanct us page and queries
 

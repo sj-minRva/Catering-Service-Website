@@ -33,7 +33,7 @@ document.getElementById("bookingForm").addEventListener("submit", function(event
         
         document.getElementById("submitButton").addEventListener("click", function() {
             if (!this.disabled) {
-                window.location.href = "menu.html"; // Redirects to menu.html when enabled.
+                window.location.href = "menuselect.html"; // Redirects to menuselect.html when enabled.
             }
         });
                
