@@ -27,6 +27,17 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        
+        <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+        </script>
+        <script type="text/javascript">
+        (function(){
+            emailjs.init({
+                publicKey: "YOUR_PUBLIC_KEY",
+            });
+        })();
+        </script>
     </head>
 
     <body>
@@ -144,8 +155,30 @@
                             
                             // Function for handling "Confirm" button clicks
                             function confirmCustomer(id) {
-                                console.log(`Customer with ID ${id} confirmed.`);
-                                // Add additional logic for confirming customer if needed
+                                // Get the row corresponding to the clicked Confirm button
+                                const row = document.querySelector(`button[onclick="confirmCustomer(${id})"]`).closest('tr');
+                            
+                                // Extract details from the row
+                                const name = row.children[1].textContent; // Name column
+                                const contact = row.children[2].textContent; // Contact column
+                                const email = row.children[3].textContent; // Email column
+                            
+                                const templateParams = {
+                                    name: name,
+                                    email: email,
+                                    contact: contact
+                                };
+                            
+                                // Use Email.js to send the email
+                                emailjs.send('service_fugmed5', 'template_i0zkziu', templateParams)
+                                    .then((response) => {
+                                        alert(`Email sent successfully to ${email}!`);
+                                        console.log('Success!', response.status, response.text);
+                                    })
+                                    .catch((error) => {
+                                        alert('An error occurred, please try again later.');
+                                        console.error('Error sending email:', error);
+                                    });
                             }
                             
                             // Function for handling "Not Confirm" button clicks
@@ -154,7 +187,7 @@
                                 // Add additional logic for not confirming customer if needed
                             }
                         </script>
-                       
+                        
                     </div>
                 </div>
             </div>
