@@ -11,7 +11,7 @@ merge events testamnonals and services
 
 
 make adimn login.
-    login page redirects to admin login 
-        which shows custBookdata
-            each new entry has confirm & not confirm button
+    login page redirects to admin login                          -------- done
+        which shows custBookdata                                 -------- done
+            each new entry has confirm & not confirm button      -------- done
                 confirm ---- email notification

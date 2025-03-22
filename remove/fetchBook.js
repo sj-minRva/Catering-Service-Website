@@ -18,6 +18,10 @@ function loadCustomers() {
                         <td>${customer.guests}</td>
                         <td>${customer.food_type}</td>
                         <td>${customer.event_date}</td>
+                        <td>
+                            <button onclick="confirmCustomer(${customer.id})">Confirm</button>
+                            <button onclick="notConfirmCustomer(${customer.id})">Reject</button>
+                        </td>
                     </tr>
                 `;
                 tableBody.innerHTML += row;
@@ -27,3 +31,15 @@ function loadCustomers() {
 }
 
 window.onload = loadCustomers;
+
+// Function for handling "Confirm" button clicks
+function confirmCustomer(id) {
+    console.log(`Customer with ID ${id} confirmed.`);
+    // Add additional logic for confirming customer if needed
+}
+
+// Function for handling "Not Confirm" button clicks
+function notConfirmCustomer(id) {
+    console.log(`Customer with ID ${id} not confirmed.`);
+    // Add additional logic for not confirming customer if needed
+}
