@@ -764,7 +764,7 @@
     <div id="bookingSummary">
         <h3>Booking Summary</h3>
         <p id="summaryText"></p>
-        <button onclick="confirmOrder()">Confirm</button>
+        <button type="button" id="confirmOrder" class="btn btn-primary mt-3" onclick="confirmOrder()">Confirm</button>
     </div>
 </div>
 
@@ -774,6 +774,9 @@
         const bookingSummary = document.getElementById("bookingSummary");
         const summaryTextElement = document.getElementById("summaryText");
 
+        // Global variable to store selected items
+        let selectedItems = [];
+
         // Initially set "No item selected!" message and hide the summary box
         summaryTextElement.innerText = "No item selected!";
         bookingSummary.style.display = "none";
@@ -781,14 +784,16 @@
         addToOrderButton.addEventListener("click", function () {
             const items = document.querySelectorAll(".menu-item");
             let summaryText = "";
+            selectedItems = []; // Reset the selected items array
 
             items.forEach(item => {
                 const itemName = item.querySelector("h4").innerText;
                 const countInput = item.querySelector("input[type='number']");
-                const count = countInput.value;
+                const count = parseInt(countInput.value, 10);
 
                 if (count && count > 0) {
                     summaryText += `<p>${count} x ${itemName}</p>`;
+                    selectedItems.push({ name: itemName, quantity: count }); // Add item details to the array
                 }
             });
 
@@ -800,34 +805,62 @@
                 bookingSummary.style.display = "none";  // Hide the summary if nothing is selected
             }
         });
-    });
 
-    function confirmOrder() {
-        alert("Order confirmed!");
-   }
+        // Function to save the order when Confirm button is clicked
+        function confirmOrder() {        
+            if (selectedItems.length === 0) {
+                alert("No items selected to confirm!");
+                return;
+            }
+            
+            // Send selected items to the backend API
+            fetch('http://127.0.0.1:5003/api/orders', { // Use the correct backend API URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ items: selectedItems }) // Send the selected items as JSON
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Order placed successfully!");
+                    console.log("Order saved to database.");
+                } else {
+                    alert("Failed to place the order.");
+                    console.error("Error saving order:", response);
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        // Attach confirmOrder function to the Confirm button
+        document.getElementById("confirmOrder").addEventListener("click", confirmOrder);
+    });
 </script>
 
 <style>
-   #bookingSummary {
-    display: none;                /* Initially hidden */
-    margin: 20px auto;            /* Center the box horizontally */
-    padding: 20px;                
-    border: 2px solid #333;       /* Slightly darker border */
-    border-radius: 8px;
-    background-color: #f9f9f9;    /* Light background */
-    width: 80%;                   /* Make it take up 80% of the parent width */
-    max-width: 800px;             /* Limit maximum width */
-    text-align: center;           /* Center-align text inside */
-}
+    #bookingSummary {
+     display: none;                /* Initially hidden */
+     margin: 20px auto;            /* Center the box horizontally */
+     padding: 20px;                
+     border: 2px solid #333;       /* Slightly darker border */
+     border-radius: 8px;
+     background-color: #f9f9f9;    /* Light background */
+     width: 80%;                   /* Make it take up 80% of the parent width */
+     max-width: 800px;             /* Limit maximum width */
+     text-align: center;           /* Center-align text inside */
+ }
+ 
+ #summaryText {
+     font-size: 18px;              /* Make text bigger */
+     font-weight: bold;            /* Make text darker and bolder */
+     color: #222;                  /* Dark font color */
+     text-align: left;             /* Left-align the items in the summary */
+ }
+ 
+ </style>
 
-#summaryText {
-    font-size: 18px;              /* Make text bigger */
-    font-weight: bold;            /* Make text darker and bolder */
-    color: #222;                  /* Dark font color */
-    text-align: left;             /* Left-align the items in the summary */
-}
 
-</style>
 <!--Menu end-->
 
         <!-- Footer Start -->
@@ -900,39 +933,35 @@
         </div>
         <!-- Footer End -->
 
-
-
-    <!-- Copyright Start -->
-    <div class="container-fluid copyright bg-dark py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>BS Foods</a>, All right reserved.</span>
-                </div>
-                <div class="col-md-6 my-auto text-center text-md-end text-white">
-                    Designed By <a class="border-bottom">Tastique</a>
+        <!-- Copyright Start -->
+        <div class="container-fluid copyright bg-dark py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>BS Foods</a>, All right reserved.</span>
+                    </div>
+                    <div class="col-md-6 my-auto text-center text-md-end text-white">
+                        Designed By <a class="border-bottom">Tastique</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Copyright End -->
+        <!-- Copyright End -->
 
         <!-- Back to Top -->
-        <a href="#" class="btn btn-md-square btn-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+        <a href="#" class="btn btn-md-square btn-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a> 
 
-        
-    <!-- JavaScript Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <!-- JavaScript Libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/counterup/counterup.min.js"></script>
+        <script src="lib/lightbox/js/lightbox.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
     </body>
-
 </html>

@@ -4,7 +4,7 @@ import mysql.connector
 
 app = Flask(__name__)
 
-# Allow all origins (temporary fix, can be restricted later)
+# ✅ Allow all origins (temporary fix, can be restricted later)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 def get_db_connection():
