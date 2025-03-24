@@ -108,6 +108,7 @@
                                     <th>Guest Count</th>
                                     <th>Dietary Preference</th>
                                     <th>Date</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="customerTableBody">
@@ -117,7 +118,7 @@
                     </div>
                     <script>
                         function loadCustomers() {
-                            fetch('http://127.0.0.1:5001/api/customers') // Fetch data from the API
+                            fetch('http://127.0.0.1:5000/api/customers') // Fetch data from the API
                                 .then(response => response.json())
                                 .then(data => {
                                     const tableBody = document.getElementById("customerTableBody");
@@ -243,6 +244,12 @@
                                 <p>Price: $10</p>
                                 <button class="btn btn-confirm">Edit</button>
                             </div>
+
+                            
+
+
+
+
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,3 @@
-change phone to password                                     -------- done
-
-fix menu footer
 
 ask for images
 
@@ -16,6 +13,10 @@ merge events testamnonals and services
 change nav bar
 
 combine menu and booking database
+
+fix password in login page
+
+show booking id when saved in bookingpage 
 
 
 make adimn login.                                                -------- done
