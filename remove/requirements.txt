@@ -3,9 +3,8 @@ ask for images
 
 reduce delay time
 
-fix menu page
-    remove count and add to order
-
+fix menu select page
+    
 contanct us page and queries
 
 merge events testamnonals and services
@@ -18,10 +17,6 @@ fix password in login page
 
 show booking id when saved in bookingpage 
 
+fix the nav bar of all adminPages
 
-make adimn login.                                                -------- done
-    orgainze the admin page
-    login page redirects to admin login                          -------- done
-        which shows custBookdata                                 -------- done
-            each new entry has confirm & not confirm button      -------- done
-                confirm ---- email notification                  -------- done
+

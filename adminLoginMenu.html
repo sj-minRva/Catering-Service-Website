@@ -74,143 +74,81 @@
             </div>
         </div>
         <!-- Navbar End -->
-        
+
         <div class="container mt-4">
                
             <div class="tab-content">
                 <!-- Order Requests Section -->
                 <div class="tab-pane fade show active" id="orders">
-                    <h3 class="menu-section">Order Requests</h3>                                       
+                    <h3 class="menu-section">Manage Menu</h3>                                       
                     <br>
-                    <div class="col-md-6 col-lg-7">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Contact</th>
-                                    <th>Email</th>
-                                    <th>Event Place</th>
-                                    <th>City</th>
-                                    <th>Event Type</th>
-                                    <th>Guest Count</th>
-                                    <th>Dietary Preference</th>
-                                    <th>Date</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="customerTableBody">
-                                <!-- Data will be injected here -->
-                            </tbody>
-                        </table>                          
+                        <div class="col-md-6 col-lg-7">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>S No.</th>
+                                            <th>BookingID</th>  
+                                            <th>Item</th>
+                                            <th>Quantity</th>
+                                            <th>Order_Date</th>                                                                                      
+                                        </tr>
+                                    </thead>
+                                    <tbody id="MenuTableBody">
+                                        <!-- Data will be injected here -->
+                                    </tbody>
+                                </table>                          
+                            </div>
+                            
+                            <script>
+                                function loadOrders() {
+                                    fetch('http://127.0.0.1:5004/api/orders') // Ensure the correct port matches the backend
+                                        .then(response => {
+                                            if (!response.ok) {
+                                                throw new Error("Failed to fetch orders");
+                                            }
+                                            return response.json();
+                                        })
+                                        .then(data => {
+                                            const tableBody = document.getElementById("MenuTableBody");
+                                            tableBody.innerHTML = ""; // Clear existing data
+                            
+                                            let serialNumber = 1; // Initialize serial number
+                                            data.forEach((order) => {
+                                                const row = `
+                                                    <tr>
+                                                        <td>${serialNumber++}</td>
+                                                        <td>${order.bookingID}</td>
+                                                        <td>${order.item_name}</td>
+                                                        <td>${order.quantity}</td>
+                                                        <td>${order.order_date}</td>
+                                                    </tr>
+                                                `;
+                                                tableBody.innerHTML += row;
+                                            });
+                                        })
+                                        .catch(error => console.error("Error loading orders:", error));
+                                }
+                            
+                                // Load orders when the page is loaded
+                                window.onload = loadOrders;
+                            </script>                        
+            
+                        </div>
                     </div>
-                    <script>
-                        function loadCustomers() {
-                            fetch('http://127.0.0.1:5000/api/customers') // Fetch data from the API
-                                .then(response => response.json())
-                                .then(data => {
-                                    const tableBody = document.getElementById("customerTableBody");
-                                    tableBody.innerHTML = ""; // Clear existing data
-                        
-                                    data.forEach((customer) => {
-                                        const row = `
-                                            <tr>
-                                                <td>${customer.id}</td>
-                                                <td>${customer.name}</td>
-                                                <td>${customer.contact}</td>
-                                                <td>${customer.email}</td>
-                                                <td>${customer.place}</td>
-                                                <td>${customer.city}</td>
-                                                <td>${customer.event_type}</td>
-                                                <td>${customer.guests}</td>
-                                                <td>${customer.food_type}</td>
-                                                <td>${customer.event_date}</td>
-                                                <td>
-                                                                                                                      
-                                                    <button class="btn btn-primary mt-3" onclick="confirmCustomer(${customer.id})">Confirm</button>
-                                                    <button class="btn btn-primary mt-3" onclick="notConfirmCustomer(${customer.id})"> Reject</button>
-                                                </td>
-                                            </tr>
-                                        `;
-                                        tableBody.innerHTML += row;
-                                    });
-                                })
-                                .catch(error => console.error("Error loading customers:", error));
-                        }
-                        
-                        window.onload = loadCustomers;
-                        
-                        // Function for handling "Confirm" button clicks
-                        function confirmCustomer(id) {
-                            // Get the row corresponding to the clicked Confirm button
-                            const row = document.querySelector(`button[onclick="confirmCustomer(${id})"]`).closest('tr');
-                        
-                            // Extract details from the row
-                            const name = row.children[1].textContent; // Name column
-                            const contact = row.children[2].textContent; // Contact column
-                            const email = row.children[3].textContent; // Email column
-                        
-                            const templateParams = {
-                                name: name,
-                                email: email,
-                                contact: contact
-                            };
-                        
-                            // Use Email.js to send the email
-                            emailjs.send('service_fugmed5', 'template_i0zkziu', templateParams)
-                                .then((response) => {
-                                    alert(`Email sent successfully to ${email}!`);
-                                    console.log('Success!', response.status, response.text);
-                                })
-                                .catch((error) => {
-                                    alert('An error occurred, please try again later.');
-                                    console.error('Error sending email:', error);
-                                });
-                        }
-                        
-                        // Function for handling "Not Confirm" button clicks
-                        function notConfirmCustomer(id) {
-                            const row = document.querySelector(`button[onclick="notConfirmCustomer(${id})"]`).closest('tr');
-                            const name = row.children[1].textContent;
-                            const contact = row.children[2].textContent;
-                            const email = row.children[3].textContent;
-                        
-                            const templateParams = { name: name, email: email, contact: contact };
-                        
-                            // Send rejection email
-                            emailjs.send('service_fugmed5', 'template_9vlg116', templateParams)
-                                .then((response) => {
-                                    alert(`Rejection email sent successfully to ${email}!`);
-                                    console.log('Email sent!', response.status, response.text);
-                        
-                                    // Send DELETE request only after email is sent successfully
-                                    fetch(`http://127.0.0.1:5000/api/customers/${id}`, {
-                                        method: 'DELETE',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                            'Accept': 'application/json'
-                                        }
-                                    })
-                                    .then(response => {
-                                        if (response.ok) {
-                                            console.log(`Customer with ID ${id} removed from database.`);
-                                            row.remove();  // ✅ Remove row only after successful DELETE
-                                        } else {
-                                            console.error(`Failed to remove customer with ID ${id} from database.`);
-                                            return response.json().then(err => { throw new Error(err.error); });
-                                        }
-                                    })
-                                    .catch(error => console.error("Error deleting customer:", error));
-                                })
-                                .catch((error) => {
-                                    alert('An error occurred while sending the rejection email.');
-                                    console.error('Error sending email:', error);
-                                });
-                        }                              
-                              
-                    </script>
                 </div>
     
+                <!-- Queries and Feedback Section -->
+                <div class="tab-pane fade" id="feedback">
+                    <h3 class="menu-section">Queries & Feedback</h3>
+                    <div class="feedback-item">
+                        <p><strong>From:</strong> Customer Email - john.doe@example.com</p>
+                        <p><strong>Message:</strong> Great service! Loved the menu variety.</p>
+                    </div>
+                    <div class="feedback-item">
+                        <p><strong>From:</strong> Customer Email - jane.smith@example.com</p>
+                        <p><strong>Message:</strong> Can you add vegan options?</p>
+                    </div>
+                </div>
             </div>
         </div>
     
