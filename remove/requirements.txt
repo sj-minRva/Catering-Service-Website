@@ -7,13 +7,13 @@ fix menu select page
     
 contanct us page and queries
 
-merge events testamnonals and services
+merge events testamnonals and services ---------- done
 
 change nav bar
 
 combine menu and booking database
 
-fix password in login page
+fix password in login page ------- done
 
 show booking id when saved in bookingpage 
 

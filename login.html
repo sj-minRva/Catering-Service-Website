@@ -57,9 +57,9 @@
                                 <div class="col-lg-4 col-md-6">
                                     <input type="email" id="email" name="email" required class="form-control border-primary p-2" placeholder="Enter your email">
                                 </div>
-                                <div class="col-lg-4 col-md-6">
+                                <div class="col-lg-4 col-md-6 position-relative">
                                     <input type="password" id="password" name="password" required class="form-control border-primary p-2" placeholder="Enter your password">
-                                    <button type="button" id="togglePassword" class="toggle-password">Show</button>
+                                    <i id="togglePassword" class="fas fa-eye position-absolute" style="right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
                                 </div>
                         
                                 <div class="col-12 text-center">
@@ -68,7 +68,7 @@
                                 <div id="response"></div>
                             </div>
                         </form>
-                        <script src="test api\script.js"></script>
+                        
                         
                     </div>
                 </div>
@@ -77,6 +77,23 @@
                 </div>
             </div>
         </div>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script>
+    src="test api\script.js"
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+
+    togglePassword.addEventListener('click', function () {
+        // Toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+
+        // Toggle between the eye and eye-slash icons
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+</script>
     </div>
     <!-- Book Us End -->
 
