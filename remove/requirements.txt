@@ -1,6 +1,6 @@
 change phone to password
 
-ask for images
+ask for images                                                     done
 
 reduce delay time
 
@@ -9,11 +9,11 @@ fix menu page
 
 contanct us page and queries
 
-merge events testamnonals and services
+merge events testamnonals and services                           done
 
 change nav bar
 
-
+show-hide button change
 
 make adimn login.
     login page redirects to admin login                          -------- done

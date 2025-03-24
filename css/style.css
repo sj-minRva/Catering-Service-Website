@@ -158,6 +158,19 @@ h4, h5, h6, .h4, .h5, .h6 {
     background: var(--bs-primary) !important;
 }
 
+.event .event-img {
+    width: 100%;
+    height: 350px; /* Set a fixed height for uniform size */
+    position: relative;
+    overflow: hidden; /* Prevents images from affecting container size */
+}
+
+.event .event-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image scales properly without distortion */
+}
+
 .event .event-img .event-overlay {
     position: absolute;
     width: 100%;
@@ -171,6 +184,7 @@ h4, h5, h6, .h4, .h5, .h6 {
     z-index: 1;
 }
 
+
 .event .event-img:hover .event-overlay {
     opacity: 1;
 }
@@ -179,7 +193,7 @@ h4, h5, h6, .h4, .h5, .h6 {
 
 /*** service start ***/
 .service .service-item {
-    position: relative;
+    position: absolute;
     height: 100%;
     border-radius: 8px;
     box-shadow: 0 0 45px rgba(0, 0, 0, .08);
