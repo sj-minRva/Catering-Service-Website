@@ -1,7 +1,7 @@
+// bookScript.js
 document.getElementById("bookingForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
-    // Collect form data
     const bookingData = {
         name: document.getElementById("Name").value.trim(),
         contact: document.getElementById("contact").value.trim(),
@@ -14,8 +14,7 @@ document.getElementById("bookingForm").addEventListener("submit", function(event
         date: document.getElementById("date").value
     };
 
-    // Send data to Flask API
-    fetch("http://127.0.0.1:5000/api/book", { // Updated port to 5000
+    fetch("http://127.0.0.1:5001/api/book", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -24,17 +23,23 @@ document.getElementById("bookingForm").addEventListener("submit", function(event
     })
     .then(response => response.json())
     .then(data => {
-        // Handle success response
-        document.getElementById('response').innerText = "Booking successful! Redirecting...";
-        console.log('Success:', data);
+        document.getElementById('response').innerText = data.message;
+        if (data.message === "Booking successful!"){
+            document.getElementById("saveButton").addEventListener("click", function(event) {
+                event.preventDefault();
+                document.getElementById('response').innerText = "Saved successfully!";
+                document.getElementById("submitButton").disabled = false;
+            });
 
-        // Redirect to menu selection after 2 seconds
-        setTimeout(() => {
-            window.location.href = "menuselect.html";
-        }, 2000);
+            document.getElementById("submitButton").addEventListener("click", function() {
+                if (!this.disabled) {
+                    window.location.href = "menuselect.html";
+                }
+            });
+        }
+        console.log('Success:', data);
     })
     .catch((error) => {
-        // Handle error response
         document.getElementById('response').innerText = `Error: ${error.message}`;
         console.error('Error:', error);
     });
