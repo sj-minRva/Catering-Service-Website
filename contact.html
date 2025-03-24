@@ -159,9 +159,7 @@
 <!-- JavaScript for Form Handling -->
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("enquiryForm").addEventListener("submit", handleSubmit);
-    });
+    document.getElementById("enquiryForm").onsubmit = handleSubmit;
 
     async function handleSubmit(event) {
         event.preventDefault(); // Prevent form from reloading the page
