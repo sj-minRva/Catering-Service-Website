@@ -27,13 +27,15 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-        
+
         <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
         </script>
         <script type="text/javascript">
         (function(){
             emailjs.init({
+
+
                 publicKey: "IX86bgM667tATtm_0",
             });
         })();
@@ -140,7 +142,7 @@
                                                     <td>${customer.event_date}</td>
                                                     <td>
                                                                                                                           
-                                                        <button class="btn btn-primary mt-3" onclick="confirmCustomer(${customer.id})">Confirm</button>
+                                                        <button class="btn btn-primary mt-3" onclick="sendMail()">Confirm</button>
                                                         <button class="btn btn-primary mt-3" onclick="notConfirmCustomer(${customer.id})"> Reject</button>
                                                     </td>
                                                 </tr>
