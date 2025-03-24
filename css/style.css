@@ -193,7 +193,7 @@ h4, h5, h6, .h4, .h5, .h6 {
 
 /*** service start ***/
 .service .service-item {
-    position: absolute;
+    position: relative;
     height: 100%;
     border-radius: 8px;
     box-shadow: 0 0 45px rgba(0, 0, 0, .08);
@@ -482,7 +482,6 @@ h4, h5, h6, .h4, .h5, .h6 {
     color: var(--bs-primary) !important;
 }
 /*** Footer End ***/
-
 
 
 
