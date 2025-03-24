@@ -1,13 +1,18 @@
 change phone to password
 
+ask for images
+
 reduce delay time
 
 fix menu page
-    script does not work
+    remove count and add to order
 
 contanct us page and queries
 
 merge events testamnonals and services
+
+change nav bar
+
 
 
 make adimn login.

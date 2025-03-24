@@ -27,17 +27,19 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+
         <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
         </script>
         <script type="text/javascript">
         (function(){
             emailjs.init({
-                publicKey: "WpPCydMU0JboDWdbZ",
+
+
+                publicKey: "IX86bgM667tATtm_0",
             });
         })();
         </script>
-        <script src="script.js"></script>
     </head>
 
     <body>
@@ -155,17 +157,74 @@
                             
                             // Function for handling "Confirm" button clicks
                             function confirmCustomer(id) {
-                                console.log(`Customer with ID ${id} confirmed.`);
-                                // Add additional logic for confirming customer if needed
+                                // Get the row corresponding to the clicked Confirm button
+                                const row = document.querySelector(`button[onclick="confirmCustomer(${id})"]`).closest('tr');
+                            
+                                // Extract details from the row
+                                const name = row.children[1].textContent; // Name column
+                                const contact = row.children[2].textContent; // Contact column
+                                const email = row.children[3].textContent; // Email column
+                            
+                                const templateParams = {
+                                    name: name,
+                                    email: email,
+                                    contact: contact
+                                };
+                            
+                                // Use Email.js to send the email
+                                emailjs.send('service_fugmed5', 'template_i0zkziu', templateParams)
+                                    .then((response) => {
+                                        alert(`Email sent successfully to ${email}!`);
+                                        console.log('Success!', response.status, response.text);
+                                    })
+                                    .catch((error) => {
+                                        alert('An error occurred, please try again later.');
+                                        console.error('Error sending email:', error);
+                                    });
                             }
                             
                             // Function for handling "Not Confirm" button clicks
                             function notConfirmCustomer(id) {
-                                console.log(`Customer with ID ${id} not confirmed.`);
-                                // Add additional logic for not confirming customer if needed
-                            }
+                                const row = document.querySelector(`button[onclick="notConfirmCustomer(${id})"]`).closest('tr');
+                                const name = row.children[1].textContent;
+                                const contact = row.children[2].textContent;
+                                const email = row.children[3].textContent;
+                            
+                                const templateParams = { name: name, email: email, contact: contact };
+                            
+                                // Send rejection email
+                                emailjs.send('service_fugmed5', 'template_9vlg116', templateParams)
+                                    .then((response) => {
+                                        alert(`Rejection email sent successfully to ${email}!`);
+                                        console.log('Email sent!', response.status, response.text);
+                            
+                                        // Send DELETE request only after email is sent successfully
+                                        fetch(`http://127.0.0.1:5000/api/customers/${id}`, {
+                                            method: 'DELETE',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'Accept': 'application/json'
+                                            }
+                                        })
+                                        .then(response => {
+                                            if (response.ok) {
+                                                console.log(`Customer with ID ${id} removed from database.`);
+                                                row.remove();  // ✅ Remove row only after successful DELETE
+                                            } else {
+                                                console.error(`Failed to remove customer with ID ${id} from database.`);
+                                                return response.json().then(err => { throw new Error(err.error); });
+                                            }
+                                        })
+                                        .catch(error => console.error("Error deleting customer:", error));
+                                    })
+                                    .catch((error) => {
+                                        alert('An error occurred while sending the rejection email.');
+                                        console.error('Error sending email:', error);
+                                    });
+                            }                              
+                                  
                         </script>
-                       
+                        
                     </div>
                 </div>
             </div>
