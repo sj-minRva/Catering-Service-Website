@@ -134,6 +134,7 @@
                                     <div class="col-lg-4 col-md-6">
                                         <select id="guests" class="form-select border-primary p-2" required>
                                             <option selected disabled>No. Of Guests</option>
+                                            <option value="100-200">10-100</option>
                                             <option value="100-200">100-200</option>
                                             <option value="300-400">300-400</option>
                                             <option value="500-600">500-600</option>
@@ -152,6 +153,14 @@
                                     <div class="col-lg-4 col-md-6">
                                         <input type="date" id="date" class="form-control border-primary p-2" required>
                                     </div>
+                                    
+                                    <script>
+                                        // JavaScript to set the minimum date to today
+                                        const dateInput = document.getElementById('date');
+                                        const today = new Date().toISOString().split('T')[0]; // Get today's date in 'YYYY-MM-DD' format
+                                        dateInput.setAttribute('min', today); // Set 'min' attribute to today's date
+                                    </script>
+                                    
                                     <div class="col-12 text-center">
                                         <!-- Save Button -->
                                         <button type="submit" id="saveButton" class="btn btn-primary mt-3 me-3">Save</button>
