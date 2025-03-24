@@ -4,7 +4,7 @@ import mysql.connector
 import os
 
 app = Flask(__name__)
-CORS(app)  # Allow frontend requests
+CORS(app)  # Enable CORS for all routes
 
 # Connect to MySQL
 def get_db_connection():
@@ -17,24 +17,26 @@ def get_db_connection():
 
 # API to save orders
 @app.route("/api/orders", methods=["POST"])
-
 def save_order():
-    connection = None
-    cursor = None
     try:
-        data = request.json  # Get JSON data from frontend
-        items = data.get("items", [])  # Extract order items
+        # Get data from the frontend
+        data = request.json
+        booking_id = data.get("id")  # Extract Booking ID
+        items = data.get("items", [])  # Extract items
 
-        if not items:
-            return jsonify({"error": "No items provided"}), 400
+        if not booking_id or not items:
+            return jsonify({"error": "Booking ID and items are required"}), 400
 
+        # Connect to the database
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        # Insert each item into the database
+        # Save each item with the Booking ID into the database
         for item in items:
-            cursor.execute("INSERT INTO orders (item_name, quantity) VALUES (%s, %s)",
-                           (item["name"], item["quantity"]))
+            cursor.execute(
+                "INSERT INTO orders (bookingID, item_name, quantity) VALUES (%s, %s, %s)",
+                (booking_id, item["name"], item["quantity"])
+            )
 
         conn.commit()
         cursor.close()
@@ -47,4 +49,4 @@ def save_order():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5003)  # Running on port 5003
+    app.run(debug=True, port=5003)  # Run backend on port 5003
