@@ -1,4 +1,6 @@
-change phone to password
+change phone to password                                     -------- done
+
+fix menu footer
 
 ask for images
 
@@ -13,10 +15,12 @@ merge events testamnonals and services
 
 change nav bar
 
+combine menu and booking database
 
 
-make adimn login.
+make adimn login.                                                -------- done
+    orgainze the admin page
     login page redirects to admin login                          -------- done
         which shows custBookdata                                 -------- done
             each new entry has confirm & not confirm button      -------- done
-                confirm ---- email notification
+                confirm ---- email notification                  -------- done
