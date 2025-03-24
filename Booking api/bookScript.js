@@ -1,7 +1,7 @@
+// bookScript.js
 document.getElementById("bookingForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
-    // Collect form data
     const bookingData = {
         name: document.getElementById("Name").value.trim(),
         contact: document.getElementById("contact").value.trim(),
@@ -14,7 +14,6 @@ document.getElementById("bookingForm").addEventListener("submit", function(event
         date: document.getElementById("date").value
     };
 
-    // Send data to Flask API
     fetch("http://127.0.0.1:5001/api/book", {
         method: "POST",
         headers: {
@@ -24,26 +23,24 @@ document.getElementById("bookingForm").addEventListener("submit", function(event
     })
     .then(response => response.json())
     .then(data => {
-        
-        document.getElementById("saveButton").addEventListener("click", function(event) {
-            event.preventDefault(); // Prevents the default form submission for demonstration.
-            document.getElementById('response').innerText = "Saved successfully!"; // Visual feedback.
-            document.getElementById("submitButton").disabled = false; // Enable Submit button.
-        });
-        
-        document.getElementById("submitButton").addEventListener("click", function() {
-            if (!this.disabled) {
-                window.location.href = "menuselect.html"; // Redirects to menuselect.html when enabled.
-            }
-        });
-               
-        
+        document.getElementById('response').innerText = data.message;
+        if (data.message === "Booking successful!"){
+            document.getElementById("saveButton").addEventListener("click", function(event) {
+                event.preventDefault();
+                document.getElementById('response').innerText = "Saved successfully!";
+                document.getElementById("submitButton").disabled = false;
+            });
+
+            document.getElementById("submitButton").addEventListener("click", function() {
+                if (!this.disabled) {
+                    window.location.href = "menuselect.html";
+                }
+            });
+        }
         console.log('Success:', data);
     })
     .catch((error) => {
         document.getElementById('response').innerText = `Error: ${error.message}`;
         console.error('Error:', error);
     });
-
-    
 });

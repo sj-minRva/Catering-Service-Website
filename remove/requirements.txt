@@ -1,12 +1,10 @@
-change phone to password
 
 ask for images                                                     done
 
 reduce delay time
 
-fix menu page
-    remove count and add to order
-
+fix menu select page
+    
 contanct us page and queries
 
 merge events testamnonals and services                           done
@@ -15,8 +13,3 @@ change nav bar
 
 show-hide button change
 
-make adimn login.
-    login page redirects to admin login                          -------- done
-        which shows custBookdata                                 -------- done
-            each new entry has confirm & not confirm button      -------- done
-                confirm ---- email notification

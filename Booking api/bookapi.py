@@ -1,12 +1,15 @@
+# bookapi.py
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import mysql.connector
 import os
+from dotenv import load_dotenv
+
+load_dotenv()  # Load environment variables from .env file
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)
 
-# Use environment variables for database credentials
 def get_db_connection():
     return mysql.connector.connect(
         host=os.getenv('DB_HOST', 'localhost'),
@@ -15,12 +18,15 @@ def get_db_connection():
         password=os.getenv('DB_PASSWORD', 'root')
     )
 
+@app.route('/', methods=['GET'])
+def home():
+    return "Welcome to the booking API!"
+
 @app.route('/api/book', methods=['POST'])
 def book_event():
     connection = None
     cursor = None
     try:
-        # Parse form data from the request
         data = request.json
         name = data['name']
         contact = data['contact']
@@ -32,7 +38,6 @@ def book_event():
         food_type = data['foodType']
         event_date = data['date']
 
-        # Connect to the database and insert data
         connection = get_db_connection()
         cursor = connection.cursor()
         query = """
@@ -46,6 +51,12 @@ def book_event():
     except mysql.connector.Error as err:
         print("Database Error:", err)
         return jsonify({"message": "Booking failed!", "error": str(err)}), 500
+    except KeyError as err:
+        print("Key Error:", err)
+        return jsonify({"message": "Booking failed! Missing key in JSON data.", "error": str(err)}), 400
+    except Exception as err:
+        print("General Error:", err)
+        return jsonify({"message": "Booking failed! An unexpected error occurred.", "error": str(err)}), 500
     finally:
         if cursor:
             cursor.close()
@@ -53,4 +64,4 @@ def book_event():
             connection.close()
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)  # Run on port 5000
+    app.run(debug=True, port=5001)
