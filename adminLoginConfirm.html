@@ -62,12 +62,12 @@
                         <span class="fa fa-bars text-primary"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
-                        <div class="navbar-nav mx-auto">                            
+                        <div class="navbar-nav mx-auto">                           
                             <a href="adminLogin.html" class="nav-item nav-link">Requests</a>
-                            <a href="adminLoginConfirm.html" class="nav-item nav-link">Confirmed</a>
-                            <a href="adminLoginMenu.html" class="nav-item nav-link active">Orders</a>
+                            <a href="adminLoginConfirm.html" class="nav-item nav-link active">Confirmed</a>
+                            <a href="adminLoginMenu.html" class="nav-item nav-link">Orders</a>
                             <a href="adminLoginMenuManage.html" class="nav-item nav-link">Menu</a>
-                            <a href="adminLoginContact.html" class="nav-item nav-link">Queries</a>                        
+                            <a href="adminLoginContact.html" class="nav-item nav-link">Queries</a>                             
                          </div>
                         <button class="btn-search btn btn-primary btn-md-square me-4 rounded-circle d-none d-lg-inline-flex" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button>
                         <a href="login.html" class="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill">Login</a>
@@ -76,60 +76,67 @@
             </div>
         </div>
         <!-- Navbar End -->
-
+        
         <div class="container mt-4">
                
             <div class="tab-content">
                 <!-- Order Requests Section -->
                 <div class="tab-pane fade show active" id="orders">
-                    <h3 class="menu-section" style="font-style: normal;">Menu</h3>                                       
+                    <h3 class="menu-section">Confirmed Booking Detail</h3>                                       
                     <br>
-                    <div class="col-md-6 col-lg-7">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Guests</th>
-                                    <th>Food Type</th>
-                                    <th>Event Date</th>
-                                    <th>Items</th>
-                                    <th>Quantity</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tableBody">
-                                <!-- Data will be injected here -->
-                            </tbody>
-                        </table>                          
-                    </div>
+                    <table class="table table-bordered mt-4">
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Name</th>
+                                <th>Contact</th>
+                                <th>Email</th>
+                                <th>Place</th>
+                                <th>City</th>
+                                <th>Event Type</th>
+                                <th>Guests</th>
+                                <th>Food Type</th>
+                                <th>Event Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingDetails">
+
+                            
+                        </tbody>
+                    </table>                        
+                </div>
 
                     <script>
-                        // Fetch merged table data from Flask API
-                        fetch('http://127.0.0.1:5007/merged-data')
-                            .then(response => response.json())
-                            .then(data => {
-                                const tableBody = document.getElementById('tableBody');
-                                data.forEach(row => {
-                                    const tr = document.createElement('tr');
-                                    tr.innerHTML = `
-                                        <td>${row.booking_id}</td> 
-                                        <td>${row.name}</td>
-                                        <td>${row.guests}</td>
-                                        <td>${row.food_type}</td>
-                                        <td>${row.event_date}</td>
-                                        <td>${row.items}</td>
-                                        <td>${row.quantities}</td> 
-                                    `;
-                                    tableBody.appendChild(tr);
-                                });
-                            })
-                            .catch(error => console.error('Error fetching data:', error));
-                    </script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const confirmedBookings = JSON.parse(localStorage.getItem("confirmedBookings")) || [];
+                const tableBody = document.getElementById("bookingDetails");
 
-                        </div>
-                    </div>
-                </div>
-    
+                if (confirmedBookings.length === 0) {
+                    tableBody.innerHTML = "<tr><td colspan='10' class='text-center'>No confirmed bookings yet.</td></tr>";
+                    return;
+                }
+
+                // Loop through each booking and add it to the table
+                confirmedBookings.forEach(booking => {
+                    const row = `
+                        <tr>
+                            <td>${booking.id}</td>
+                            <td>${booking.name}</td>
+                            <td>${booking.contact}</td>
+                            <td>${booking.email}</td>
+                            <td>${booking.place}</td>
+                            <td>${booking.city}</td>
+                            <td>${booking.event_type}</td>
+                            <td>${booking.guests}</td>
+                            <td>${booking.food_type}</td>
+                            <td>${booking.event_date}</td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+            });
+        </script>
+        
             </div>
         </div>
     

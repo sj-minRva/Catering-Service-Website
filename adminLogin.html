@@ -62,12 +62,12 @@
                         <span class="fa fa-bars text-primary"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
-                        <div class="navbar-nav mx-auto">
-                           
-                            <a href="adminLogin.html" class="nav-item nav-link active">Order Requests</a>
+                        <div class="navbar-nav mx-auto">                           
+                            <a href="adminLogin.html" class="nav-item nav-link active">Requests</a>
+                            <a href="adminLoginConfirm.html" class="nav-item nav-link">Confirmed</a>
                             <a href="adminLoginMenu.html" class="nav-item nav-link">Orders</a>
                             <a href="adminLoginMenuManage.html" class="nav-item nav-link">Menu</a>
-                            <a href="adminLoginContact.html" class="nav-item nav-link">Queries</a>                             
+                            <a href="adminLoginContact.html" class="nav-item nav-link">Queries</a>                           
                          </div>
                         <button class="btn-search btn btn-primary btn-md-square me-4 rounded-circle d-none d-lg-inline-flex" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button>
                         <a href="login.html" class="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill">Login</a>
@@ -146,7 +146,30 @@
                         function confirmCustomer(id) {
                             // Get the row corresponding to the clicked Confirm button
                             const row = document.querySelector(`button[onclick="confirmCustomer(${id})"]`).closest('tr');
-                        
+                                                    
+                                                    // Get existing confirmed bookings from localStorage or create an empty array
+                            let confirmedBookings = JSON.parse(localStorage.getItem("confirmedBookings")) || [];
+
+                            // Create new booking object
+                            const newBooking = {
+                                id: id,
+                                name: row.children[1].textContent,
+                                contact: row.children[2].textContent,
+                                email: row.children[3].textContent,
+                                place: row.children[4].textContent,
+                                city: row.children[5].textContent,
+                                event_type: row.children[6].textContent,
+                                guests: row.children[7].textContent,
+                                food_type: row.children[8].textContent,
+                                event_date: row.children[9].textContent
+                            };
+
+                            // Add new booking to the list
+                            confirmedBookings.push(newBooking);
+
+                            // Save updated bookings list to localStorage
+                            localStorage.setItem("confirmedBookings", JSON.stringify(confirmedBookings));
+
                             // Extract details from the row
                             const name = row.children[1].textContent; // Name column
                             const contact = row.children[2].textContent; // Contact column
@@ -185,28 +208,6 @@
                                     alert(`Rejection email sent successfully to ${email}!`);
                                     console.log('Email sent!', response.status, response.text);
                         
-                                    // Send DELETE request only after email is sent successfully
-                                    fetch(`http://127.0.0.1:5000/api/customers/${id}`, {
-                                        method: 'DELETE',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                            'Accept': 'application/json'
-                                        }
-                                    })
-                                    .then(response => {
-                                        if (response.ok) {
-                                            console.log(`Customer with ID ${id} removed from database.`);
-                                            row.remove();  // ✅ Remove row only after successful DELETE
-                                        } else {
-                                            console.error(`Failed to remove customer with ID ${id} from database.`);
-                                            return response.json().then(err => { throw new Error(err.error); });
-                                        }
-                                    })
-                                    .catch(error => console.error("Error deleting customer:", error));
-                                })
-                                .catch((error) => {
-                                    alert('An error occurred while sending the rejection email.');
-                                    console.error('Error sending email:', error);
                                 });
                         }                              
                               
