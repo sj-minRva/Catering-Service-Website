@@ -63,7 +63,7 @@
                                 </div>
                         
                                 <div class="col-12 text-center">
-                                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                                    <button type="submit" id="submitBtn" class="btn btn-primary mt-3">Submit</button>
                                 </div>
                                 <div id="response"></div>
                             </div>
@@ -79,21 +79,58 @@
         </div>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-<script>
-    src="test api\script.js"
-    const togglePassword = document.querySelector('#togglePassword');
-    const password = document.querySelector('#password');
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const form = document.getElementById("customerForm");
+                const errorDiv = document.createElement("div"); // Create an error message container
+                errorDiv.id = "error-message";
+                errorDiv.style.color = "red"; // Style the error message
+                form.appendChild(errorDiv); // Append error message div to form
+            
+                form.addEventListener("submit", function (event) {
+                    event.preventDefault(); // Prevent form from refreshing the page
+            
+                    // Get input values
+                    const name = document.getElementById("name").value.trim();
+                    const email = document.getElementById("email").value.trim();
+                    const password = document.getElementById("password").value.trim();
+            
+                    // Validate input fields
+                    if (!name || !email || !password) {
+                        errorDiv.textContent = "All fields are required.";
+                        return; // Stop execution if any field is empty
+                    }
+            
+                    // Check if details match the given credentials
+                    if (name === "Admin" && email === "rheamaria13@gmail.com" && password === "1234") {
+                        errorDiv.textContent = "Login successful!";
+                        
+                        // Redirect to adminLogin.html after a short delay
+                        setTimeout(() => {
+                            window.location.href = "adminLogin.html"; 
+                        }, 1000);
+                    } else {
+                        errorDiv.textContent = "Incorrect login details.";
+                    }
+                });
+            
+                // Toggle Password Visibility
+                const togglePassword = document.getElementById("togglePassword");
+                togglePassword.addEventListener("click", function () {
+                    const passwordField = document.getElementById("password");
+                    const type = passwordField.type === "password" ? "text" : "password";
+                    passwordField.type = type;
+            
+                    // Toggle icon classes
+                    this.classList.toggle("fa-eye");
+                    this.classList.toggle("fa-eye-slash");
+                });
+            });
+            
+        </script>
 
-    togglePassword.addEventListener('click', function () {
-        // Toggle the type attribute
-        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-        password.setAttribute('type', type);
+    
 
-        // Toggle between the eye and eye-slash icons
-        this.classList.toggle('fa-eye');
-        this.classList.toggle('fa-eye-slash');
-    });
-</script>
     </div>
     <!-- Book Us End -->
 
