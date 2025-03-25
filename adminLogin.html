@@ -69,8 +69,25 @@
                             <a href="adminLoginMenuManage.html" class="nav-item nav-link">Menu</a>
                             <a href="adminLoginContact.html" class="nav-item nav-link">Queries</a>                           
                          </div>
-                        <button class="btn-search btn btn-primary btn-md-square me-4 rounded-circle d-none d-lg-inline-flex" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button>
-                        <a href="login.html" class="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill">Login</a>
+                        <a href="#" onclick="confirmLogout(event)" class="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill">Logout</a>
+
+                        <script>
+                            function confirmLogout(event) {
+                                // Prevent the default link action
+                                event.preventDefault();
+                        
+                                // Show confirmation dialog
+                                const userChoice = confirm("Do you want to logout?");
+                                
+                                // Check the user's response
+                                if (userChoice) {
+                                    // Redirect to the logout page or perform logout
+                                    window.location.href = "index.html";  // Update with your actual logout URL
+                                }
+                                // If "No" is clicked, do nothing (just close the dialog)
+                            }
+                        </script>
+                        
                     </div>
                 </nav>
             </div>
