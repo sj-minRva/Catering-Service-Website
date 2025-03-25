@@ -1,4 +1,3 @@
-# bookapi.py
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import mysql.connector
@@ -10,6 +9,7 @@ load_dotenv()  # Load environment variables from .env file
 app = Flask(__name__)
 CORS(app)
 
+# Function to establish database connection
 def get_db_connection():
     return mysql.connector.connect(
         host=os.getenv('DB_HOST', 'localhost'),
@@ -24,39 +24,37 @@ def home():
 
 @app.route('/api/book', methods=['POST'])
 def book_event():
+    data = request.json
     connection = None
     cursor = None
-    try:
-        data = request.json
-        name = data['name']
-        contact = data['contact']
-        email = data['email']
-        place = data['place']
-        city = data['city']
-        event_type = data['eventType']
-        guests = data['guests']
-        food_type = data['foodType']
-        event_date = data['date']
 
+    try:
         connection = get_db_connection()
         cursor = connection.cursor()
+
+        # Insert the booking into the database
         query = """
             INSERT INTO bookings (name, contact, email, place, city, event_type, guests, food_type, event_date)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
-        cursor.execute(query, (name, contact, email, place, city, event_type, guests, food_type, event_date))
+        cursor.execute(query, (
+            data['name'], data['contact'], data['email'], data['place'],
+            data['city'], data['eventType'], data['guests'], data['foodType'], data['date']
+        ))
         connection.commit()
 
-        return jsonify({"message": "Booking successful!"}), 200
+        # Get the newly created booking ID
+        booking_id = cursor.lastrowid  # Fetch the auto-incremented ID of the newly inserted record
+
+        return jsonify({
+            "message": "Booking successful!",
+            "bookingId": booking_id
+        }), 201
+
     except mysql.connector.Error as err:
         print("Database Error:", err)
         return jsonify({"message": "Booking failed!", "error": str(err)}), 500
-    except KeyError as err:
-        print("Key Error:", err)
-        return jsonify({"message": "Booking failed! Missing key in JSON data.", "error": str(err)}), 400
-    except Exception as err:
-        print("General Error:", err)
-        return jsonify({"message": "Booking failed! An unexpected error occurred.", "error": str(err)}), 500
+
     finally:
         if cursor:
             cursor.close()
