@@ -918,55 +918,8 @@
                     </div>
                 </div>
             </div>
-            <br>
+            <br>          
             
-            <div class="container mt-5">
-                <h3 class="mb-4 text-center"></h3>
-                <div class="row" id="menuContainer"></div>
-            </div>
-        
-            <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    loadMenu();
-                });
-        
-                function loadMenu() {
-                    const menuContainer = document.getElementById("menuContainer");
-                    menuContainer.innerHTML = "";
-        
-                    let menu = JSON.parse(localStorage.getItem("menu")) || [];
-                    if (menu.length === 0) {
-                     //   menuContainer.innerHTML = "<p class='text-center'>No menu items available.</p>";
-                       return;
-                    }
-        
-                    menu.forEach(item => {
-                        const menuItem = document.createElement("div");
-                        menuItem.classList.add("col-md-4", "mb-4");
-                        menuItem.innerHTML = `
-                            
-                                        <div class="tab-content">
-                                            <div id="tab-6" class="tab-pane fade show p-0 active">
-                                                <div class="row g-4">
-                                                    <div class="col-lg-6 wow bounceInUp" data-wow-delay="0.1s">
-                                                        <div class="menu-item d-flex align-items-center">
-                                                            <img class="flex-shrink-0 img-fluid rounded-circle" src="img\foodIcon2.jpeg" alt=""style="width: 95px; height: 95px;">
-                                                            <div class="w-100 d-flex flex-column text-start ps-4">
-                                                                <div class="d-flex justify-content-between border-bottom border-primary pb-2 mb-2">
-                                                                    <h4>${item.name}</h4>                                                        
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>                   
-                                                </div>
-                                            </div>
-                                        </div>
-                        `;
-                        menuContainer.appendChild(menuItem);
-                    });
-                }
-            </script>
-    
         </div>      
         
             <br>
