@@ -1,4 +1,3 @@
-// bookScript.js
 document.getElementById("bookingForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
@@ -23,21 +22,25 @@ document.getElementById("bookingForm").addEventListener("submit", function(event
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById('response').innerText = data.message;
-        if (data.message === "Booking successful!"){
+        const responseElement = document.getElementById('response');
+
+        if (data.message === "Booking successful!") {
+            responseElement.innerText = `Saved successfully! Booking ID: ${data.bookingId}`;
+
             document.getElementById("saveButton").addEventListener("click", function(event) {
                 event.preventDefault();
-                document.getElementById('response').innerText = "Saved successfully!";
+                responseElement.innerText = `Saved successfully! Booking ID: ${data.bookingId}`;
                 document.getElementById("submitButton").disabled = false;
+
             });
 
             document.getElementById("submitButton").addEventListener("click", function() {
-                if (!this.disabled) {
-                    window.location.href = "menuselect.html";
-                }
+                window.location.href = "menuselect.html";
             });
+
+        } else {
+            responseElement.innerText = data.message;
         }
-        console.log('Success:', data);
     })
     .catch((error) => {
         document.getElementById('response').innerText = `Error: ${error.message}`;
