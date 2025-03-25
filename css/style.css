@@ -14,6 +14,28 @@
  }
 /*** Spinner End ***/
 
+.hero-section {
+    background-image: url('https://wallpapercave.com/wp/wp3138532.jpg'); /* Keep your current image */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center; /* Vertically centers the text */
+}
+
+.hero-content {
+    text-align: right; /* Aligns text to the right */
+    margin-left: auto; /* Pushes content to the right side */
+    padding-right: 10%; /* Adjust as needed to place the text perfectly */
+    max-width: 70%; /* Optional: Controls the width of the text block */
+}
+
+.hero-button {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+
 
 .back-to-top {
     position: fixed;
