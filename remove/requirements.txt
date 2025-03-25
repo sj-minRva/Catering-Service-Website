@@ -5,18 +5,15 @@ reduce delay time
 
 fix menu select page
     
-contanct us page and queries
 
 merge events testamnonals and services ---------- done
 
 change nav bar
 
-combine menu and booking database
-
-fix password in login page ------- done
+every booking send email
 
 show booking id when saved in bookingpage 
 
-fix the nav bar of all adminPages
+
 
 

@@ -28,10 +28,11 @@ def get_customers():
             connection.close()
 
 # API Endpoint to Fetch Data
-@app.route('/api/customers', methods=['GET'])
+@app.route('/api/books', methods=['GET']) 
+
 def fetch_customers():
     data = get_customers()
     return jsonify(data)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)  # Running on port 5000
+    app.run(debug=True, port=5002)  # Running on port 5000
