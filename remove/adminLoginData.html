@@ -63,9 +63,9 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="adminLogin.html" class="nav-item nav-link active">Order Requests</a>
+                            <a href="adminLogin.html" class="nav-item nav-link ">Order Requests</a>
                             <a href="adminLoginMenu.html" class="nav-item nav-link">Menu</a>
-                            <a href="adminLoginContact.html" class="nav-item nav-link">Queries</a>                            
+                            <a href="adminLoginContact.html" class="nav-item nav-link active">Queries & Feedback</a>                            
                          </div>
                         <button class="btn-search btn btn-primary btn-md-square me-4 rounded-circle d-none d-lg-inline-flex" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button>
                         <a href="login.html" class="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill">Login</a>
@@ -74,13 +74,13 @@
             </div>
         </div>
         <!-- Navbar End -->
-        
+
         <div class="container mt-4">
                
             <div class="tab-content">
                 <!-- Order Requests Section -->
                 <div class="tab-pane fade show active" id="orders">
-                    <h3 class="menu-section">Order Requests</h3>                                       
+                    <h3 class="menu-section">Menu</h3>                                       
                     <br>
                     <div class="col-md-6 col-lg-7">
                         <table class="table table-bordered">
@@ -88,127 +88,44 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Contact</th>
-                                    <th>Email</th>
-                                    <th>Event Place</th>
-                                    <th>City</th>
-                                    <th>Event Type</th>
-                                    <th>Guest Count</th>
-                                    <th>Dietary Preference</th>
-                                    <th>Date</th>
-                                    <th>Actions</th>
+                                    <th>Guests</th>
+                                    <th>Food Type</th>
+                                    <th>Event Date</th>
+                                    <th>Items</th>
+                                    <th>Quantity</th>
                                 </tr>
                             </thead>
-                            <tbody id="customerTableBody">
+                            <tbody id="tableBody">
                                 <!-- Data will be injected here -->
                             </tbody>
                         </table>                          
                     </div>
+
                     <script>
-                        function loadCustomers() {
-                            fetch("http://127.0.0.1:5002/api/books")  // Fetch data from the API
-                                .then(response => response.json())
-                                .then(data => {
-                                    const tableBody = document.getElementById("customerTableBody");
-                                    tableBody.innerHTML = ""; // Clear existing data
-                        
-                                    data.forEach((customer) => {
-                                        const row = `
-                                            <tr>
-                                                <td>${customer.id}</td>
-                                                <td>${customer.name}</td>
-                                                <td>${customer.contact}</td>
-                                                <td>${customer.email}</td>
-                                                <td>${customer.place}</td>
-                                                <td>${customer.city}</td>
-                                                <td>${customer.event_type}</td>
-                                                <td>${customer.guests}</td>
-                                                <td>${customer.food_type}</td>
-                                                <td>${customer.event_date}</td>
-                                                <td>
-                                                                                                                      
-                                                    <button class="btn btn-primary mt-3" onclick="confirmCustomer(${customer.id})">Confirm</button>
-                                                    <button class="btn btn-primary mt-3" onclick="notConfirmCustomer(${customer.id})"> Reject</button>
-                                                </td>
-                                            </tr>
-                                        `;
-                                        tableBody.innerHTML += row;
-                                    });
-                                })
-                                .catch(error => console.error("Error loading customers:", error));
-                        }
-                        
-                        window.onload = loadCustomers;
-                        
-                        // Function for handling "Confirm" button clicks
-                        function confirmCustomer(id) {
-                            // Get the row corresponding to the clicked Confirm button
-                            const row = document.querySelector(`button[onclick="confirmCustomer(${id})"]`).closest('tr');
-                        
-                            // Extract details from the row
-                            const name = row.children[1].textContent; // Name column
-                            const contact = row.children[2].textContent; // Contact column
-                            const email = row.children[3].textContent; // Email column
-                        
-                            const templateParams = {
-                                name: name,
-                                email: email,
-                                contact: contact
-                            };
-                        
-                            // Use Email.js to send the email
-                            emailjs.send('service_fugmed5', 'template_i0zkziu', templateParams)
-                                .then((response) => {
-                                    alert(`Email sent successfully to ${email}!`);
-                                    console.log('Success!', response.status, response.text);
-                                })
-                                .catch((error) => {
-                                    alert('An error occurred, please try again later.');
-                                    console.error('Error sending email:', error);
+                        // Fetch merged table data from Flask API
+                        fetch('http://127.0.0.1:5007/merged-data')
+                            .then(response => response.json())
+                            .then(data => {
+                                const tableBody = document.getElementById('tableBody');
+                                data.forEach(row => {
+                                    const tr = document.createElement('tr');
+                                    tr.innerHTML = `
+                                        <td>${row.booking_id}</td> 
+                                        <td>${row.name}</td>
+                                        <td>${row.guests}</td>
+                                        <td>${row.food_type}</td>
+                                        <td>${row.event_date}</td>
+                                        <td>${row.items}</td>
+                                        <td>${row.quantities}</td> 
+                                    `;
+                                    tableBody.appendChild(tr);
                                 });
-                        }
-                        
-                        // Function for handling "Not Confirm" button clicks
-                        function notConfirmCustomer(id) {
-                            const row = document.querySelector(`button[onclick="notConfirmCustomer(${id})"]`).closest('tr');
-                            const name = row.children[1].textContent;
-                            const contact = row.children[2].textContent;
-                            const email = row.children[3].textContent;
-                        
-                            const templateParams = { name: name, email: email, contact: contact };
-                        
-                            // Send rejection email
-                            emailjs.send('service_fugmed5', 'template_9vlg116', templateParams)
-                                .then((response) => {
-                                    alert(`Rejection email sent successfully to ${email}!`);
-                                    console.log('Email sent!', response.status, response.text);
-                        
-                                    // Send DELETE request only after email is sent successfully
-                                    fetch(`http://127.0.0.1:5000/api/customers/${id}`, {
-                                        method: 'DELETE',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                            'Accept': 'application/json'
-                                        }
-                                    })
-                                    .then(response => {
-                                        if (response.ok) {
-                                            console.log(`Customer with ID ${id} removed from database.`);
-                                            row.remove();  // ✅ Remove row only after successful DELETE
-                                        } else {
-                                            console.error(`Failed to remove customer with ID ${id} from database.`);
-                                            return response.json().then(err => { throw new Error(err.error); });
-                                        }
-                                    })
-                                    .catch(error => console.error("Error deleting customer:", error));
-                                })
-                                .catch((error) => {
-                                    alert('An error occurred while sending the rejection email.');
-                                    console.error('Error sending email:', error);
-                                });
-                        }                              
-                              
+                            })
+                            .catch(error => console.error('Error fetching data:', error));
                     </script>
+
+                        </div>
+                    </div>
                 </div>
     
             </div>

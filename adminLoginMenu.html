@@ -65,7 +65,7 @@
                         <div class="navbar-nav mx-auto">
                             <a href="adminLogin.html" class="nav-item nav-link ">Order Requests</a>
                             <a href="adminLoginMenu.html" class="nav-item nav-link active">Menu</a>
-                            <a href="adminLoginContact.html" class="nav-item nav-link">Queries & Feedback</a>                            
+                            <a href="adminLoginContact.html" class="nav-item nav-link">Queries</a>                            
                          </div>
                         <button class="btn-search btn btn-primary btn-md-square me-4 rounded-circle d-none d-lg-inline-flex" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button>
                         <a href="login.html" class="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill">Login</a>
@@ -80,75 +80,54 @@
             <div class="tab-content">
                 <!-- Order Requests Section -->
                 <div class="tab-pane fade show active" id="orders">
-                    <h3 class="menu-section">Manage Menu</h3>                                       
+                    <h3 class="menu-section">Menu</h3>                                       
                     <br>
-                        <div class="col-md-6 col-lg-7">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>S No.</th>
-                                            <th>BookingID</th>  
-                                            <th>Item</th>
-                                            <th>Quantity</th>
-                                            <th>Order_Date</th>                                                                                      
-                                        </tr>
-                                    </thead>
-                                    <tbody id="MenuTableBody">
-                                        <!-- Data will be injected here -->
-                                    </tbody>
-                                </table>                          
-                            </div>
-                            
-                            <script>
-                                function loadOrders() {
-                                    fetch('http://127.0.0.1:5004/api/orders') // Ensure the correct port matches the backend
-                                        .then(response => {
-                                            if (!response.ok) {
-                                                throw new Error("Failed to fetch orders");
-                                            }
-                                            return response.json();
-                                        })
-                                        .then(data => {
-                                            const tableBody = document.getElementById("MenuTableBody");
-                                            tableBody.innerHTML = ""; // Clear existing data
-                            
-                                            let serialNumber = 1; // Initialize serial number
-                                            data.forEach((order) => {
-                                                const row = `
-                                                    <tr>
-                                                        <td>${serialNumber++}</td>
-                                                        <td>${order.bookingID}</td>
-                                                        <td>${order.item_name}</td>
-                                                        <td>${order.quantity}</td>
-                                                        <td>${order.order_date}</td>
-                                                    </tr>
-                                                `;
-                                                tableBody.innerHTML += row;
-                                            });
-                                        })
-                                        .catch(error => console.error("Error loading orders:", error));
-                                }
-                            
-                                // Load orders when the page is loaded
-                                window.onload = loadOrders;
-                            </script>                        
-            
+                    <div class="col-md-6 col-lg-7">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Guests</th>
+                                    <th>Food Type</th>
+                                    <th>Event Date</th>
+                                    <th>Items</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                <!-- Data will be injected here -->
+                            </tbody>
+                        </table>                          
+                    </div>
+
+                    <script>
+                        // Fetch merged table data from Flask API
+                        fetch('http://127.0.0.1:5007/merged-data')
+                            .then(response => response.json())
+                            .then(data => {
+                                const tableBody = document.getElementById('tableBody');
+                                data.forEach(row => {
+                                    const tr = document.createElement('tr');
+                                    tr.innerHTML = `
+                                        <td>${row.booking_id}</td> 
+                                        <td>${row.name}</td>
+                                        <td>${row.guests}</td>
+                                        <td>${row.food_type}</td>
+                                        <td>${row.event_date}</td>
+                                        <td>${row.items}</td>
+                                        <td>${row.quantities}</td> 
+                                    `;
+                                    tableBody.appendChild(tr);
+                                });
+                            })
+                            .catch(error => console.error('Error fetching data:', error));
+                    </script>
+
                         </div>
                     </div>
                 </div>
     
-                <!-- Queries and Feedback Section -->
-                <div class="tab-pane fade" id="feedback">
-                    <h3 class="menu-section">Queries & Feedback</h3>
-                    <div class="feedback-item">
-                        <p><strong>From:</strong> Customer Email - john.doe@example.com</p>
-                        <p><strong>Message:</strong> Great service! Loved the menu variety.</p>
-                    </div>
-                    <div class="feedback-item">
-                        <p><strong>From:</strong> Customer Email - jane.smith@example.com</p>
-                        <p><strong>Message:</strong> Can you add vegan options?</p>
-                    </div>
-                </div>
             </div>
         </div>
     
