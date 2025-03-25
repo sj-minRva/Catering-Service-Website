@@ -897,130 +897,177 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="menu-item d-flex align-items-center">
-                                <img class="flex-shrink-0 img-fluid rounded-circle" src="img\fruit with ice.jpg" alt=""style="width: 95px; height: 95px;">
+                                <img class="flex-shrink-0 img-fluid rounded-circle" src="img/fruit with ice.jpg" alt=""
+                                    style="width: 95px; height: 95px;">
                                 <div class="w-100 d-flex flex-column text-start ps-4">
                                     <div class="d-flex justify-content-between border-bottom border-primary pb-2 mb-2">
                                         <h4>Fruitsalad with ice-cream</h4>
-                                        
                                     </div>
                                     <form action="menu.html">
                                         <div class="mb-3">
                                             <label for="Price" class="form-label text-primary fw-bold">Price: 55</label>
                                             <br>
                                             <label for="itemCount" class="form-label text-primary fw-bold">Count:</label>
-                                            <input type="number" id="itemCount" name="count" min="1" max="100" class="form-control d-inline-block w-auto">
+                                            <input type="number" id="itemCount" name="count" min="1" max="100"
+                                                class="form-control d-inline-block w-auto">
                                         </div>
-                                    </form> 
+                                    </form>
                                 </div>
                             </div>
                         </div>
+                        
+                        </div>
+                        </div>
+                        </div>
+                        
+                        <!-- Menu Container -->
+                        <div class="container mt-5">
+                            <h3 class="mb-4 text-center"></h3>
+                            <div class="row" id="menuContainer"></div>
+                        </div>
+                        
+                        <br>
+                        
+                        <!-- Booking Section -->
+                        <input type="text" id="id" name="id" required class="form-control border-primary p-2"
+                            placeholder="Enter your Booking Id">
+                        <button type="button" id="addToOrderButton" class="btn btn-primary mt-3">Add to Order</button>
+                        
+                        <!-- Booking Summary -->
+                        <div id="bookingSummary" style="display: none;">
+                            <h3>Booking Summary</h3>
+                            <p id="summaryText">No item selected!</p>
+                            <button type="button" id="confirmOrder" class="btn btn-primary mt-3">Confirm</button>
+                        </div>
+                        
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                const menuContainer = document.getElementById("menuContainer");
+                                if (!menuContainer) {
+                                    console.error("Error: menuContainer not found!");
+                                    return;
+                                }
+                        
+                                loadMenu();  // Ensure menu items load before event listeners
+                        
+                                setupOrderEvents(); // Set up order logic after menu is loaded
+                        
+                                // Prevent form submission to avoid page reload
+                                document.querySelectorAll("form").forEach(form => {
+                                    form.addEventListener("submit", function (event) {
+                                        event.preventDefault();
+                                    });
+                                });
+                            });
+                        
+                            function loadMenu() {
+                                const menuContainer = document.getElementById("menuContainer");
+                                if (!menuContainer) return;
+                        
+                                menuContainer.innerHTML = ""; // Clear existing content
+                        
+                                let menu = JSON.parse(localStorage.getItem("menu")) || [];
+                                if (menu.length === 0) {
+                                    menuContainer.innerHTML = "<p class='text-center'>No menu items available.</p>";
+                                    return;
+                                }
+                        
+                                menu.forEach(item => {
+                                    const menuItemHTML = `
+                                        <div class="col-md-4 mb-4">
+                                            <div class="menu-item d-flex align-items-center">
+                                                <img class="flex-shrink-0 img-fluid rounded-circle" src="https://i.pinimg.com/564x/fa/c7/39/fac73900c96a27677a2e14398467440c.jpg" alt=""
+                                                    style="width: 95px; height: 95px;">
+                                                     <div class="d-flex flex-column text-start custom-width">
+                                                    <div class="border-bottom border-primary pb-2 mb-2">
+                                                        <h4>${item.name}</h4>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label text-primary fw-bold">Price: ${item.image}</label>
+                                                        <br>
+                                                        <label for="itemCount" class="form-label text-primary fw-bold">Count:</label>
+                                                        <input type="number" id="itemCount" name="count" min="1" max="100" class="form-control d-inline-block w-auto">
+                                                    </div>
+                                                </div>
 
-                    </div>
-                </div>
-            </div>
-            <br>          
-            
-        </div>      
-        
-            <br>
-            <br>
-            <br>
-    <!-- Add to Order Button -->
-    <input type="int" id="id" name="id" required class="form-control border-primary p-2" placeholder="Enter your Booking Id">
-    <button type="button" id="addToOrderButton" class="btn btn-primary mt-3">Add to Order</button>
-
-    <!-- Booking Summary -->
-    <div id="bookingSummary">
-        <h3>Booking Summary</h3>
-        <p id="summaryText"></p>
-        <button type="button" id="confirmOrder" class="btn btn-primary mt-3" onclick="confirmOrder()">Confirm</button>
-    </div>
-</div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const addToOrderButton = document.getElementById("addToOrderButton");
-        const bookingSummary = document.getElementById("bookingSummary");
-        const summaryTextElement = document.getElementById("summaryText");
-        const confirmOrderButton = document.getElementById("confirmOrder");
-    
-        // Global variables
-        let selectedItems = [];
-        let bookingID = null;
-    
-        // Initially set "No item selected!" message and hide the summary box
-        summaryTextElement.innerText = "No item selected!";
-        bookingSummary.style.display = "none";
-    
-        // Function to add selected items to the order
-        addToOrderButton.addEventListener("click", function () {
-            // Get Booking ID
-            bookingID = document.getElementById("id").value.trim();
-            if (!bookingID) {
-                alert("Booking ID is required!");
-                return;
-            }
-    
-            // Reset selected items
-            selectedItems = [];
-            let summaryText = "";
-    
-            // Collect menu items
-            const items = document.querySelectorAll(".menu-item");
-            items.forEach(item => {
-                const itemName = item.querySelector("h4").innerText;
-                const countInput = item.querySelector("input[type='number']");
-                const count = parseInt(countInput.value, 10);
-    
-                if (itemName && count && count > 0) {
-                    selectedItems.push({ name: itemName, quantity: count });
-                    summaryText += `<p>${count} x ${itemName}</p>`;
-                }
-            });
-    
-            // Update summary
-            if (selectedItems.length > 0) {
-                summaryTextElement.innerHTML = summaryText;
-                bookingSummary.style.display = "block";
-            } else {
-                summaryTextElement.innerText = "No item selected!";
-                bookingSummary.style.display = "none";
-            }
-        });
-    
-        // Function to confirm and send the order to the backend
-        confirmOrderButton.addEventListener("click", function () {
-            if (selectedItems.length === 0) {
-                alert("No items selected to confirm!");
-                return;
-            }
-    
-            // Send data to the backend
-            fetch("http://127.0.0.1:5003/api/orders", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id: bookingID, items: selectedItems }) // Include Booking ID with items
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert("Order placed successfully!");
-                        summaryTextElement.innerText = "Order placed successfully!";
-                        console.log("Order saved to database.");
-                    } else {
-                        response.json().then(data => {
-                            alert(`Failed to place the order: ${data.error}`);
-                            console.error("Error saving order:", data);
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                    alert(`Error: ${error.message}`);
-                });
-        });
-    });
-    
-</script>
+                                            </div>
+                                        </div>
+                                    `;
+                                    menuContainer.insertAdjacentHTML("beforeend", menuItemHTML);
+                                });
+                            }
+                        
+                            function setupOrderEvents() {
+                                const addToOrderButton = document.getElementById("addToOrderButton");
+                                const bookingSummary = document.getElementById("bookingSummary");
+                                const summaryTextElement = document.getElementById("summaryText");
+                                const confirmOrderButton = document.getElementById("confirmOrder");
+                        
+                                let selectedItems = [];
+                                let bookingID = null;
+                        
+                                addToOrderButton.addEventListener("click", function () {
+                                    bookingID = document.getElementById("id").value.trim();
+                                    if (!bookingID) {
+                                        alert("Booking ID is required!");
+                                        return;
+                                    }
+                        
+                                    selectedItems = [];
+                                    let summaryText = "";
+                        
+                                    const items = document.querySelectorAll(".menu-item");
+                                    items.forEach(item => {
+                                        const itemName = item.querySelector("h4").innerText;
+                                        const countInput = item.querySelector("input[type='number']");
+                                        const count = parseInt(countInput?.value, 10) || 0;
+                        
+                                        if (count > 0) {
+                                            selectedItems.push({ name: itemName, quantity: count });
+                                            summaryText += `<p>${count} x ${itemName}</p>`;
+                                        }
+                                    });
+                        
+                                    if (selectedItems.length > 0) {
+                                        summaryTextElement.innerHTML = summaryText;
+                                        bookingSummary.style.display = "block";
+                                    } else {
+                                        summaryTextElement.innerText = "No item selected!";
+                                        bookingSummary.style.display = "none";
+                                    }
+                                });
+                        
+                                confirmOrderButton.addEventListener("click", function () {
+                                    if (selectedItems.length === 0) {
+                                        alert("No items selected to confirm!");
+                                        return;
+                                    }
+                        
+                                    fetch("http://127.0.0.1:5003/api/orders", {
+                                        method: "POST",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify({ id: bookingID, items: selectedItems })
+                                    })
+                                        .then(response => {
+                                            if (response.ok) {
+                                                alert("Order placed successfully!");
+                                                summaryTextElement.innerText = "Order placed successfully!";
+                                                console.log("Order saved to database.");
+                                            } else {
+                                                response.json().then(data => {
+                                                    alert(`Failed to place the order: ${data.error}`);
+                                                    console.error("Error saving order:", data);
+                                                });
+                                            }
+                                        })
+                                        .catch(error => {
+                                            console.error("Error:", error);
+                                            alert(`Error: ${error.message}`);
+                                        });
+                                });
+                            }
+                        </script>
+                        
 
 <style>
     #bookingSummary {

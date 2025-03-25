@@ -106,36 +106,41 @@
                     </table>                        
                 </div>
 
-                    <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const confirmedBookings = JSON.parse(localStorage.getItem("confirmedBookings")) || [];
-                const tableBody = document.getElementById("bookingDetails");
-
-                if (confirmedBookings.length === 0) {
-                    tableBody.innerHTML = "<tr><td colspan='10' class='text-center'>No confirmed bookings yet.</td></tr>";
-                    return;
-                }
-
-                // Loop through each booking and add it to the table
-                confirmedBookings.forEach(booking => {
-                    const row = `
-                        <tr>
-                            <td>${booking.id}</td>
-                            <td>${booking.name}</td>
-                            <td>${booking.contact}</td>
-                            <td>${booking.email}</td>
-                            <td>${booking.place}</td>
-                            <td>${booking.city}</td>
-                            <td>${booking.event_type}</td>
-                            <td>${booking.guests}</td>
-                            <td>${booking.food_type}</td>
-                            <td>${booking.event_date}</td>
-                        </tr>
-                    `;
-                    tableBody.innerHTML += row;
-                });
-            });
-        </script>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const confirmedBookings = JSON.parse(localStorage.getItem("confirmedBookings")) || [];
+                        const tableBody = document.getElementById("bookingDetails");
+                    
+                        if (!tableBody) {
+                            console.error("Table body not found!");
+                            return;
+                        }
+                    
+                        if (confirmedBookings.length === 0) {
+                            tableBody.innerHTML = "<tr><td colspan='10' class='text-center'>No confirmed bookings yet.</td></tr>";
+                            return;
+                        }
+                    
+                        // Reverse the array to display latest bookings first
+                        const rows = confirmedBookings.reverse().map(booking => `
+                            <tr>
+                                <td>${booking.id}</td>
+                                <td>${booking.name}</td>
+                                <td>${booking.contact}</td>
+                                <td>${booking.email}</td>
+                                <td>${booking.place}</td>
+                                <td>${booking.city}</td>
+                                <td>${booking.event_type}</td>
+                                <td>${booking.guests}</td>
+                                <td>${booking.food_type}</td>
+                                <td>${booking.event_date}</td>
+                            </tr>
+                        `).join("");
+                    
+                        tableBody.innerHTML = rows;
+                    });
+                    </script>
+                    
         
             </div>
         </div>

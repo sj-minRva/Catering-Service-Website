@@ -85,7 +85,7 @@
                         <!-- Add Menu Form -->
                         <div class="mb-4">
                             <input type="text" id="itemName" class="form-control mb-2" placeholder="Enter item name">
-                            <input type="text" id="itemImage" class="form-control mb-2" placeholder="Enter image URL">
+                            <input type="text" id="itemImage" class="form-control mb-2" placeholder="Enter the price">
                             <button class="btn btn-primary" onclick="addMenuItem()">Add Item</button>
                         </div>
                 
@@ -579,7 +579,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="menu-item d-flex align-items-center">
-                                        <img class="flex-shrink-0 img-fluid rounded-circle" src="img\fruit with ice.jpg" alt=""style="width: 95px; height: 95px;">
+                                        <img class="flex-shrink-0 img-fluid rounded-circle" src="https://i.pinimg.com/564x/fa/c7/39/fac73900c96a27677a2e14398467440c.jpg" alt=""style="width: 95px; height: 95px;">
                                         <div class="w-100 d-flex flex-column text-start ps-4">
                                             <div class="d-flex justify-content-between border-bottom border-primary pb-2 mb-2">
                                                 <h4>Fruitsalad with ice-cream</h4>                                        
@@ -600,7 +600,7 @@
                                 const itemImage = document.getElementById("itemImage").value.trim();
                     
                                 if (itemName === "" || itemImage === "") {
-                                    alert("Please enter both name and image URL.");
+                                    alert("Please enter both name and price.");
                                     return;
                                 }
                     
@@ -635,10 +635,13 @@
                                                 <div class="row g-4">
                                                     <div class="col-lg-6 wow bounceInUp" data-wow-delay="0.1s">
                                                         <div class="menu-item d-flex align-items-center">
-                                                            <img class="flex-shrink-0 img-fluid rounded-circle" src="img\foodIcon2.jpeg" alt=""style="width: 95px; height: 95px;">
+                                                            <img class="flex-shrink-0 img-fluid rounded-circle" src="img/foodIcon2.jpeg" alt=""style="width: 95px; height: 95px;">
                                                             <div class="w-100 d-flex flex-column text-start ps-4">
                                                                 <div class="d-flex justify-content-between border-bottom border-primary pb-2 mb-2">
-                                                                    <h4>${item.name}</h4>                                                        
+                                                                    <h4>${item.name}</h4>  
+                                                                    <br>
+                                                                    <label for="Price" class="form-label text-primary fw-bold">Price: ${item.image}</label>
+                                                                    <br>                                                      
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -646,6 +649,8 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <br>
+                                        <br>
                                         <button class="btn btn-danger btn-sm" onclick="removeMenuItem(${index})">Remove</button>                                       
 
                                     `;

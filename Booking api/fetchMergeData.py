@@ -26,7 +26,7 @@ def get_merged_data():
                 b.id AS booking_id,
                 b.name,
                 b.contact,
-                b.event_date,
+                b.event_date,`
                 b.guests,
                 b.food_type,
                 COALESCE(GROUP_CONCAT(o.item_name SEPARATOR ', '), 'No Orders') AS items,

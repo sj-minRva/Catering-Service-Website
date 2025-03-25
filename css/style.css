@@ -252,6 +252,10 @@ h3{
     opacity: 0;
     z-index: 1;
 }
+.custom-width {
+    max-width: 90%; /* Adjust this value for better control */
+    padding-left: 10px; /* Fine-tune padding */
+}
 
 
 .event .event-img:hover .event-overlay {

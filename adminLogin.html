@@ -125,7 +125,7 @@
                     </div>
                     <script>
                         function loadCustomers() {
-                            fetch("http://127.0.0.1:5002/api/books")  // Fetch data from the API
+                            fetch("http://127.0.0.1:5002/api/books") // Fetch data from the API
                                 .then(response => response.json())
                                 .then(data => {
                                     const tableBody = document.getElementById("customerTableBody");
@@ -133,7 +133,7 @@
                         
                                     data.forEach((customer) => {
                                         const row = `
-                                            <tr>
+                                            <tr id="row-${customer.id}">
                                                 <td>${customer.id}</td>
                                                 <td>${customer.name}</td>
                                                 <td>${customer.contact}</td>
@@ -145,9 +145,8 @@
                                                 <td>${customer.food_type}</td>
                                                 <td>${customer.event_date}</td>
                                                 <td>
-                                                                                                                      
-                                                    <button class="btn btn-primary mt-3" onclick="confirmCustomer(${customer.id})">Confirm</button>
-                                                    <button class="btn btn-primary mt-3" onclick="notConfirmCustomer(${customer.id})"> Reject</button>
+                                                    <button class="btn btn-primary mt-3" id="confirm-${customer.id}" onclick="confirmCustomer(${customer.id})">Confirm</button>
+                                                    <button class="btn btn-danger mt-3" id="reject-${customer.id}" onclick="notConfirmCustomer(${customer.id})">Reject</button>
                                                 </td>
                                             </tr>
                                         `;
@@ -161,13 +160,11 @@
                         
                         // Function for handling "Confirm" button clicks
                         function confirmCustomer(id) {
-                            // Get the row corresponding to the clicked Confirm button
-                            const row = document.querySelector(`button[onclick="confirmCustomer(${id})"]`).closest('tr');
-                                                    
-                                                    // Get existing confirmed bookings from localStorage or create an empty array
+                            const row = document.getElementById(`row-${id}`);
+                            if (!row) return;
+                        
                             let confirmedBookings = JSON.parse(localStorage.getItem("confirmedBookings")) || [];
-
-                            // Create new booking object
+                        
                             const newBooking = {
                                 id: id,
                                 name: row.children[1].textContent,
@@ -180,28 +177,23 @@
                                 food_type: row.children[8].textContent,
                                 event_date: row.children[9].textContent
                             };
-
-                            // Add new booking to the list
+                        
                             confirmedBookings.push(newBooking);
-
-                            // Save updated bookings list to localStorage
                             localStorage.setItem("confirmedBookings", JSON.stringify(confirmedBookings));
-
-                            // Extract details from the row
-                            const name = row.children[1].textContent; // Name column
-                            const contact = row.children[2].textContent; // Contact column
-                            const email = row.children[3].textContent; // Email column
+                        
+                            // Disable confirm button & disable reject button after confirming
+                            document.getElementById(`confirm-${id}`).disabled = true;
+                            document.getElementById(`reject-${id}`).disabled = true;
                         
                             const templateParams = {
-                                name: name,
-                                email: email,
-                                contact: contact
+                                name: newBooking.name,
+                                email: newBooking.email,
+                                contact: newBooking.contact
                             };
                         
-                            // Use Email.js to send the email
                             emailjs.send('service_fugmed5', 'template_i0zkziu', templateParams)
                                 .then((response) => {
-                                    alert(`Email sent successfully to ${email}!`);
+                                    alert(`Email sent successfully to ${newBooking.email}!`);
                                     console.log('Success!', response.status, response.text);
                                 })
                                 .catch((error) => {
@@ -210,21 +202,28 @@
                                 });
                         }
                         
-                        // Function for handling "Not Confirm" button clicks
+                        // Function for handling "Reject" button clicks
                         function notConfirmCustomer(id) {
-                            const row = document.querySelector(`button[onclick="notConfirmCustomer(${id})"]`).closest('tr');
+                            const row = document.getElementById(`row-${id}`);
+                            if (!row) return;
+                        
                             const name = row.children[1].textContent;
                             const contact = row.children[2].textContent;
                             const email = row.children[3].textContent;
                         
                             const templateParams = { name: name, email: email, contact: contact };
                         
-                            // Send rejection email
                             emailjs.send('service_fugmed5', 'template_9vlg116', templateParams)
                                 .then((response) => {
                                     alert(`Rejection email sent successfully to ${email}!`);
                                     console.log('Email sent!', response.status, response.text);
-                        
+                                    
+                                    // Disable both buttons after rejecting
+                                    document.getElementById(`confirm-${id}`).disabled = true;
+                                    document.getElementById(`reject-${id}`).disabled = true;
+                                })
+                                .catch((error) => {
+                                    console.error('Error sending rejection email:', error);
                                 });
                         }                              
                               
