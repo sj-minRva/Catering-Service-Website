@@ -22,18 +22,19 @@ def get_merged_data():
         cursor = db.cursor(dictionary=True)
 
         query = """
-            SELECT 
-                b.id AS booking_id,
-                b.name,
-                b.contact,
-                b.event_date,`
-                b.guests,
-                b.food_type,
-                COALESCE(GROUP_CONCAT(o.item_name SEPARATOR ', '), 'No Orders') AS items,
-                COALESCE(GROUP_CONCAT(o.quantity SEPARATOR ', '), 'No Orders') AS quantities
-            FROM bookings b
-            LEFT JOIN orders o ON b.id = o.bookingID
-            GROUP BY b.id;
+                    SELECT 
+            b.id AS booking_id,
+            b.name,
+            b.contact,
+            b.event_date,
+            b.guests,
+            b.food_type,
+            COALESCE(GROUP_CONCAT(o.item_name SEPARATOR ', '), 'No Orders') AS items,
+            COALESCE(GROUP_CONCAT(o.quantity SEPARATOR ', '), 'No Orders') AS quantities
+        FROM bookings b
+        LEFT JOIN orders o ON b.id = o.bookingID
+        GROUP BY b.id, b.name, b.contact, b.event_date, b.guests, b.food_type;
+
         """
 
         cursor.execute(query)
